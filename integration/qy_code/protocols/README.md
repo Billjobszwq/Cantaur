@@ -118,7 +118,7 @@ Knowledge System V2 确认后，协议层后续不只承接任务协作，还应
 - `${QYCLAW_HOME}/workspace/integration/qy_code/runtime/shadow-live/`
 - `${QYCLAW_HOME}/workspace/integration/qy_code/runtime/live/`
 
-这一步说明协议层已经开始有真实运行时落点，但还没有完全替换当前默认 live 协作路径。
+这一步说明协议层已经开始有真实运行时落点，但还没有完全调整当前默认 live 协作路径。
 
 当前最小闭环已经能写成：
 
@@ -133,7 +133,7 @@ knowledge lifecycle
 
 ## 当前边界
 
-- 不替换当前默认 live 消息主链
+- 不变更当前默认 live 消息主链
 - 不改 Feishu channel
 - 仍然主要作为后续开发的协议基线
 

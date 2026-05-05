@@ -32,7 +32,7 @@ def role_summary(agent_id: str) -> str:
         'content': '负责内容表达、传播包装、文案与热点洞察。',
         'ops': '负责运营执行、试点推进、流程组织与落地节奏平衡。',
         'law': '负责法律、合规、边界与风险解释。',
-        'finance': '负责预算、ROI、成本控制与资金安全判断。',
+        'finance': '负责预算、ROI、成本控制与资金风控判断。',
         'research': '负责研究、情报、证据、市场与系统能力深挖。',
     }
     return defaults.get(agent_id, f'{agent_id} agent')

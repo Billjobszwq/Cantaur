@@ -30,7 +30,7 @@
 - 默认使用独立 SQLite 数据库
 - 默认使用独立 runtime 目录
 - 不接入现网 Feishu / session / gateway
-- 不替换当前协作路径
+- 不变更当前协作路径
 
 ## V2 协议方向
 

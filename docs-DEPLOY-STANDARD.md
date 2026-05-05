@@ -1,4 +1,6 @@
-# QYclaw 发行与部署标准（对齐 QYclaw / Unique 主流体验）
+# Cantaur 发行与部署标准
+
+本项目基于openclaw魔改。
 
 - 版本：`v1.0`
 - 日期：`2026-05-04`
@@ -8,7 +10,7 @@
 
 ## 1. 目标体验（发布标准）
 
-参考主流 QYclaw / Unique 的使用体验，QYclaw 发布标准定义为：
+Cantaur 发布标准定义为：
 
 1. 一行命令完成本地部署（安装依赖、初始化目录、生成配置模板、启动核心进程）。
 2. 启动后 5 分钟内完成核心配置（Agent、模型 API、Skill 路径）。
@@ -121,7 +123,7 @@ qyclaw panel open
 
 ---
 
-## 6. 与 QYclaw / Unique 对齐点
+## 6. 版本特性
 
 1. 单命令可启动（降低部署门槛）。
 2. 配置声明式（模型、agent、skill 均模板化）。
@@ -131,7 +133,7 @@ qyclaw panel open
 
 ---
 
-## 7. “开源核心代码加密”可行性说明（关键）
+## 7. “开源核心代码加密”可行性说明
 
 这里需要明确一个事实：
 
@@ -186,7 +188,7 @@ qyclaw panel open
 5. `docs/COMMANDS.md`（命令手册）
 6. `docs/DEPLOY.md`（部署手册）
 7. `docs/PANEL.md`（控制面板手册）
-8. `docs/SECURITY.md`（安全与密钥策略）
+8. `docs/PUBLISH-CHECK.md`（发布检查与密钥策略）
 
 ---
 

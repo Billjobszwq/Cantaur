@@ -87,8 +87,8 @@
 
 - 不改 `qyclaw.json` 主生产路由
 - 不改 Feishu 主通道逻辑
-- 不替换现有 workspace 隔离结构
-- 不替换现有 memory db 生产路径
+- 不变更现有 workspace 隔离结构
+- 不变更现有 memory db 生产路径
 - 不让本目录中的设计直接接管现网行为
 
 ## 当前阶段完成定义

@@ -1,6 +1,6 @@
-# GitHub 发布与安全检查
+# GitHub 发布检查
 
-本文件用于把当前 Cantaur（QYclaw Mode）发布到 GitHub，并确保不上传私人信息。
+本文件用于把当前 Cantaur（QYclaw Mode）发布到 GitHub，并避免上传私人信息。
 
 ## 发布前检查
 
@@ -32,13 +32,13 @@ gh auth status
 示例（公开仓库）：
 
 ```bash
-gh repo create qyclaw-qyclaw-mode --public --source . --remote origin --push
+gh repo create Cantaur --public --source . --remote origin --push
 ```
 
 示例（私有仓库）：
 
 ```bash
-gh repo create qyclaw-qyclaw-mode --private --source . --remote origin --push
+gh repo create Cantaur --private --source . --remote origin --push
 ```
 
 如果你已提前建好空仓库：
@@ -59,7 +59,7 @@ git push origin v1.0.0
 
 ```bash
 git clone <YOUR_REPO_URL>
-cd qyclaw-qyclaw-mode
+cd Cantaur
 QYCLAW_HOME=$HOME/.qyclaw bash ./install.sh
 ```
 
@@ -71,7 +71,7 @@ $HOME/.qyclaw/workspace/bin/qyclaw doctor
 $HOME/.qyclaw/workspace/bin/qyclaw panel
 ```
 
-## 安全发布建议
+## 发布建议
 
 - 仓库启用 Secret Scanning（GitHub Advanced Security 可选）。
 - `.env` 只保留在本地，仓库仅提交 `.env.example`。

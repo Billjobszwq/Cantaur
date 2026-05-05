@@ -274,7 +274,7 @@ def build_next_actions(messages: list[dict[str, Any]]) -> list[dict[str, Any]]:
                 reason = "该候选更像经验教训，建议继续补样本、技术注记或研究证据，再决定是否升格。"
             elif candidate_type == "preference":
                 action_type = "align_preference_candidate"
-                reason = "该候选更像表达/偏好，建议先由内容侧对齐口径，再决定是否固化。"
+                reason = "该候选更像表达/偏好，建议先由内容侧统一口径，再决定是否固化。"
             action = {
                 "priority": "high",
                 "action_type": action_type,

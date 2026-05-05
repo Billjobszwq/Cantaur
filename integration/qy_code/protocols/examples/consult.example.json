@@ -9,7 +9,7 @@
   "to": "finance",
   "created_at": "2026-04-03T16:30:00+08:00",
   "body": {
-    "consult_topic": "该机会的 ROI 和预算安全性如何",
+    "consult_topic": "该机会的 ROI 和预算稳健性如何",
     "context_summary": "示例行业系统机会研究进入财务评估阶段",
     "required_response": "high-level opinion",
     "handoff_back_to": "research"
