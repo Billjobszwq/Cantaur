@@ -77,6 +77,7 @@ $HOME/.qyclaw/workspace/bin/qyclaw run --title "Cross-functional report" --goal 
 ## 详细部署文档
 
 - `docs/DEPLOY.md`
+- `docs/PROJECT-TRACKS.md`（项目双线状态手册）
 
 ## 发布说明
 
