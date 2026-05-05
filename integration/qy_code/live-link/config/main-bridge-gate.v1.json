@@ -12,7 +12,7 @@
     "main-workflow",
     "main-explicit-bridge"
   ],
-  "notes": "正式融合上线版 gate。允许以 Phase 32 长期骨架进行默认融合运行，并保留人工最终回复边界。",
+  "notes": "正式协同上线版 gate。允许以 Phase 32 长期骨架进行默认协同运行，并保留人工最终回复边界。",
   "updated_at": "2026-04-05T18:03:20+08:00",
   "activated_by_profile": "formal-fusion-live-v1"
 }

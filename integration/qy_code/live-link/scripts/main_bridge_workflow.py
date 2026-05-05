@@ -116,7 +116,7 @@ def main() -> int:
     parser.add_argument('--required-agents', default='')
     parser.add_argument('--constraint', dest='constraints', action='append')
     parser.add_argument('--decision-note', default='main 判断该任务需要桥接辅助。')
-    parser.add_argument('--bridge-reason', default='当前任务适合走正式融合协作。')
+    parser.add_argument('--bridge-reason', default='当前任务适合走正式协同协作。')
     parser.add_argument('--risk-level', default='medium', choices=['low', 'medium', 'high', 'critical'])
     parser.add_argument('--task-id')
     parser.add_argument('--trace-id')

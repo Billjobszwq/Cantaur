@@ -73,7 +73,7 @@ Knowledge System V2 确认后，协议层后续不只承接任务协作，还应
 
 这意味着协议消息不只是入队和留痕，而是已经出现了默认消费方。
 
-当前 `main` 还可以把消费结果继续升级成：
+当前 `main` 还可以把消费结果继续扩展成：
 - `KNOWLEDGE_ACTION_SUGGESTED`
 
 并把这些动作消息投递给：
@@ -133,7 +133,7 @@ knowledge lifecycle
 
 ## 当前边界
 
-- 不变更当前默认 live 消息主链
+- 不调整当前默认 live 消息主链
 - 不改 Feishu channel
 - 仍然主要作为后续开发的协议基线
 

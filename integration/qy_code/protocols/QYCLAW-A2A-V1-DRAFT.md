@@ -12,7 +12,7 @@
 - 回收结果
 - 记录状态
 - 发起复核
-- 触发升级
+- 触发扩展
 - 管理权限请求
 
 当前仅是协议草案，不接入现网运行链路。
@@ -148,7 +148,7 @@
 {
   "state": "in_progress",
   "progress": 0.45,
-  "note": "已完成公开资料搜集，进入对比分析",
+  "note": "已完成公开资料搜集，进入矩阵比较分析",
   "blockers": []
 }
 ```
@@ -206,8 +206,8 @@
 {
   "knowledge_scope": "project",
   "candidate_type": "decision",
-  "title": "示例行业巡检系统适合先走正式融合版验证",
-  "summary": "多 agent 协作结果显示，应先按正式融合版交付验证，而不是直接扩大 live 暴露面。",
+  "title": "示例行业巡检系统适合先走正式协同版验证",
+  "summary": "多 agent 协作结果显示，应先按正式协同版交付验证，而不是直接扩大 live 暴露面。",
   "evidence": "来源于 memory-fusion 汇总与正式测试结果。",
   "proposed_target": "20-semantic/decisions",
   "source_refs": [
@@ -228,7 +228,7 @@
   "page_type": "project",
   "page_path": "/abs/path/knowledge/projects/convenience-ai.md",
   "operation": "update",
-  "summary": "已把正式融合版测试产物写入项目知识页。",
+  "summary": "已把正式协同版测试产物写入项目知识页。",
   "source_refs": [
     "/abs/path/memory-fusion/output/task-001"
   ],
@@ -245,7 +245,7 @@
 {
   "candidate_ref": "/abs/path/review-queue/RQ-20260410-001.md",
   "adopted_target": "20-semantic/decisions",
-  "title": "正式融合版优先作为主验证路径",
+  "title": "正式协同版优先作为主验证路径",
   "summary": "将该知识候选提升为长期决策语义项。",
   "adopted_by": "main",
   "decision_note": "用户确认采纳。"
@@ -302,7 +302,7 @@
 第一版只处理：
 - 结构化任务协作
 - 状态事件
-- 复核与升级
+- 复核与扩展
 - 权限申请与响应
 
 第一版暂不处理：
@@ -325,4 +325,4 @@ TASK / RESULT / REVIEW / CONSULT / EVENT / ESCALATE
 + KNOWLEDGE_ACTION_SUGGESTED
 ```
 
-这四类新增消息的目标不是替代原有任务消息，而是把“协作产生知识、知识升级为规则”的过程显式化。
+这四类新增消息的目标不是替代原有任务消息，而是把“协作产生知识、知识扩展为规则”的过程显式化。

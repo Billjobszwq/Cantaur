@@ -1,21 +1,21 @@
-# QYclaw x QY_Codex 融合结构入口
+# QYclaw x QY_Codex 协同结构入口
 
 最后更新：2026-04-03
 状态：sidecar 原型已落地，现网最小接入已开始（shadow mode）
 
 ## 目标
 
-本目录用于承载 QYclaw 与 QY_Codex 的融合设计、协议草案、目录骨架与后续实施文档。
+本目录用于承载 QYclaw 与 QY_Codex 的协同设计、协议草案、目录骨架与后续实施文档。
 
 当前原则：
 - 先做结构化设计，不直接改生产运行链路
-- 先建立可升级的协作内核，不重写现有 QYclaw 底座
+- 先建立可扩展的协作内核，不重写现有 QYclaw 底座
 - 先抽能力边界，再决定哪些模块需要真正开发
 
 ## 当前目录结构
 
 - `QYCLAW-CLAUDECODEX-INTEGRATION-BLUEPRINT.md`
-  - 总体融合蓝图
+  - 总体协同蓝图
 - `QYCLAW-CLAUDECODEX-MODULE-MAP.md`
   - QY_Codex 能力与 QYclaw 宿主映射
 - `QYCLAW-CLAUDECODEX-ROADMAP.md`
@@ -51,7 +51,7 @@
 - `bus/`
   - Mailbox / Bus MVP 旁路实现
 - `memory-fusion/`
-  - 旁路记忆融合与记忆包输出
+  - 旁路记忆协同与记忆包输出
 - `live-link/`
   - 现网最小接入层、shadow 派单、registry sync、runtime bootstrap
 - `runtime/`
@@ -87,13 +87,13 @@
 
 - 不改 `qyclaw.json` 主生产路由
 - 不改 Feishu 主通道逻辑
-- 不变更现有 workspace 隔离结构
-- 不变更现有 memory db 生产路径
+- 不调整现有 workspace 隔离结构
+- 不调整现有 memory db 生产路径
 - 不让本目录中的设计直接接管现网行为
 
 ## 当前阶段完成定义
 
-当以下内容齐备时，说明“融合结构设计 + sidecar 原型”已经成立：
+当以下内容齐备时，说明“协同结构设计 + sidecar 原型”已经成立：
 - 蓝图明确
 - 分阶段路线明确
 - 模块映射明确

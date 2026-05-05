@@ -29,7 +29,7 @@
     ],
     "workflow_mode": "enforce",
     "execution_mode": "start-only",
-    "notes": "正式融合上线版 gate。允许以 Phase 32 长期骨架进行默认融合运行，并保留人工最终回复边界。"
+    "notes": "正式协同上线版 gate。允许以 Phase 32 长期骨架进行默认协同运行，并保留人工最终回复边界。"
   },
   "boundaries": [
     "只服务 report.cross_functional",
@@ -40,7 +40,7 @@
     "不自动切换阶段"
   ],
   "testing_positioning": [
-    "作为当前工作区默认上线融合版本",
+    "作为当前工作区默认上线协同版本",
     "允许日常运行、正式验收与持续回归，但仍保留人工主控边界",
     "默认 intake 继续使用 delivery-framed cross-functional 表达"
   ]

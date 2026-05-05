@@ -191,7 +191,7 @@ def write_comparison_note(path: Path, response: dict[str, Any], accepted: bool, 
             '',
             '## Comparison Decision',
             '- 待 main 或操作者比较 sidecar 综合稿与现网主链输出。',
-            '- 当前桥接结果作为正式融合辅助输出，由 main 做最终回复与最终动作判断。',
+            '- 当前桥接结果作为正式协同辅助输出，由 main 做最终回复与最终动作判断。',
             '',
         ])
     else:

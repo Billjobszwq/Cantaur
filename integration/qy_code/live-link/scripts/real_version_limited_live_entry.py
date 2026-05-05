@@ -256,7 +256,7 @@ def cmd_run(args: argparse.Namespace) -> int:
         "governance": profile.get("governance"),
         "boundaries": profile.get("boundaries", []),
         "summary_points": [
-            "当前任务已通过真实版本受控融合入口进入 bridge workflow。",
+            "当前任务已通过真实版本受控协同入口进入 bridge workflow。",
             "当前任务默认绑定 Phase 32 作为长期工作面参考层。",
             "当前输出仍保持人工主控，不自动接管最终回复。",
         ],
@@ -301,7 +301,7 @@ def build_parser() -> argparse.ArgumentParser:
     p_run.add_argument("--source-message-id", default="")
     p_run.add_argument("--source-session-id", default="")
     p_run.add_argument("--task-type", default="report.cross_functional")
-    p_run.add_argument("--decision-note", default="真实版本受控融合窗口内，允许当前任务进入 Phase 32 默认工作面。")
+    p_run.add_argument("--decision-note", default="真实版本受控协同窗口内，允许当前任务进入 Phase 32 默认工作面。")
     p_run.add_argument("--bridge-reason", default="当前任务进入真实版本受控小流量执行窗口，使用 Phase 32 作为默认长期工作面。")
     return parser
 

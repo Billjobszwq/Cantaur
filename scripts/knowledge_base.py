@@ -1649,7 +1649,7 @@ def backfill_continuity() -> dict:
         "",
         "## Purpose",
         "",
-        "把历史 `knowledge/instreet/` 资产纳入统一知识主根索引，避免 V2 改造后成为孤岛。",
+        "把历史 `knowledge/instreet/` 资产纳入统一知识主根索引，避免 V2 构建后成为孤岛。",
         "",
         "## Files",
         "",

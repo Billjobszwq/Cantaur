@@ -27,7 +27,7 @@ def dump_json(path: Path, payload):
 
 def role_summary(agent_id: str) -> str:
     defaults = {
-        'main': '总协调官，负责收口任务、拆解协作、汇总交付与升级决策。',
+        'main': '总协调官，负责收口任务、拆解协作、汇总交付与扩展决策。',
         'dev': '负责开发、架构、系统设计与技术实现判断。',
         'content': '负责内容表达、传播包装、文案与热点洞察。',
         'ops': '负责运营执行、试点推进、流程组织与落地节奏平衡。',

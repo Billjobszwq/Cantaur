@@ -11,8 +11,8 @@
   "body": {
     "knowledge_scope": "project",
     "candidate_type": "decision",
-    "title": "正式融合版应优先作为统一知识主链验证入口",
-    "summary": "当前协作与编译结果表明，正式融合版更适合作为统一知识主链的默认入口。",
+    "title": "正式协同版应优先作为统一知识主链验证入口",
+    "summary": "当前协作与编译结果表明，正式协同版更适合作为统一知识主链的默认入口。",
     "evidence": "来源于 memory-fusion 汇总、formal fusion 运行结果和人工评审。",
     "proposed_target": "20-semantic/decisions",
     "source_refs": [

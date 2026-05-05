@@ -5,7 +5,7 @@
 
 ## 目标
 
-把当前 `main` 的“主控经验”升级为正式控制平面设计，明确 coordinator、worker、verification、handoff 的关系。
+把当前 `main` 的“主控经验”扩展为正式控制平面设计，明确 coordinator、worker、verification、handoff 的关系。
 
 ## 核心原则
 

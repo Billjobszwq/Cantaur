@@ -172,7 +172,7 @@ def blackboard_put(bus_db: Path, bus_runtime: Path, root_task_id: str, synthesis
 
 def render_markdown(root: dict, subtasks: list[dict], result_messages: list[dict], note: str, root_status: str) -> str:
     lines = [
-        f"# {root['title']} - main 融合汇总",
+        f"# {root['title']} - main 协同汇总",
         "",
         f"- `task_id`: `{root['task_id']}`",
         f"- `trace_id`: `{root['trace_id']}`",
@@ -263,7 +263,7 @@ def main() -> int:
         "shadow_synthesized",
         args.note,
     )
-    add_event(task_db, args.root_task_id, root_status, 1.0 if root_status == "completed" else 0.7, "main 已完成融合汇总", "main")
+    add_event(task_db, args.root_task_id, root_status, 1.0 if root_status == "completed" else 0.7, "main 已完成协同汇总", "main")
     acked_messages = ack_result_messages(bus_db, bus_runtime, result_messages)
     blackboard_put(bus_db, bus_runtime, args.root_task_id, synthesis_payload)
 

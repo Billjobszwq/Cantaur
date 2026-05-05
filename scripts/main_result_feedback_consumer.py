@@ -237,7 +237,7 @@ def infer_project_name(message: dict[str, Any]) -> str:
     parent_task_id = str(message.get("parent_task_id") or "")
     base = parent_task_id or task_id
     if "-中国示例行业ai巡检系统" in base:
-        return "示例行业巡检系统正式融合版"
+        return "示例行业巡检系统正式协同版"
     return base
 
 

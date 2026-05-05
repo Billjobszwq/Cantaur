@@ -14,7 +14,7 @@
 1. 架构定位与设计目标
 2. 系统总架构与适用平台
 3. 目录与代码分层
-4. 与原始 QYclaw 的对比（QYclaw 增强矩阵）
+4. 与原始 QYclaw 的矩阵比较（QYclaw 增强矩阵）
 5. Agent 系统与多 Agent 通讯架构
 6. 记忆与知识体系
 7. 记忆与知识蒸馏与迭代机制
@@ -30,7 +30,7 @@
 ---
 ## 1. 架构定位与设计目标
 
-QYclaw 的目标不是“再做一个聊天机器人”，而是把 Agent 系统从“会话驱动”升级为“操作系统驱动”。
+QYclaw 的目标不是“再做一个聊天机器人”，而是把 Agent 系统从“会话驱动”扩展为“操作系统驱动”。
 
 核心目标：
 
@@ -87,7 +87,7 @@ ${QYCLAW_HOME}
 ├─ memory/                           # 全局会话/记忆运行态
 └─ workspace/                        # 工程主目录
    ├─ scripts/                       # 生产脚本入口（P1~P4、运维、桥接）
-   ├─ integration/qy_code/       # 融合内核（协议/总线/生命周期）
+   ├─ integration/qy_code/       # 协同内核（协议/总线/生命周期）
    ├─ knowledge/                     # 统一知识主根
    ├─ memory/                        # 分层记忆主根
    ├─ memory-system/                 # 记忆系统规则与路由
@@ -109,7 +109,7 @@ workspace/integration/qy_code/
 
 ### 3.3 关键生产入口（当前版本）
 
-- 正式融合入口：`${QYCLAW_HOME}/workspace/scripts/formal_fusion_version.py`
+- 正式协同入口：`${QYCLAW_HOME}/workspace/scripts/formal_fusion_version.py`
 - 生命周期入口：`${QYCLAW_HOME}/workspace/integration/qy_code/live-link/scripts/main_bridge_lifecycle.py`
 - 总线入口：`${QYCLAW_HOME}/workspace/integration/qy_code/bus/scripts/bus_cli.py`
 - 协议校验器：`${QYCLAW_HOME}/workspace/integration/qy_code/protocols/scripts/validate_qyclaw_a2a.py`
@@ -117,7 +117,7 @@ workspace/integration/qy_code/
 
 ---
 
-## 4. 与原始 QYclaw 的对比（QYclaw 增强矩阵）
+## 4. 与原始 QYclaw 的矩阵比较（QYclaw 增强矩阵）
 
 > 说明：这里的“原始 QYclaw”是指以会话响应与渠道路由为主的基础形态；QYclaw 是在其上叠加协议化协作、生命周期治理与蒸馏闭环的增强线。
 
@@ -328,7 +328,7 @@ timed_out --> queued : retry
 
 | 领域 | 命令入口 | 说明 |
 | --- | --- | --- |
-| 融合运行 | `formal_fusion_version.py run/status/smoke` | 生产任务入口 |
+| 协同运行 | `formal_fusion_version.py run/status/smoke` | 生产任务入口 |
 | 生命周期 | `main_bridge_lifecycle.py trigger/run/status/retry/terminate/timeout-scan` | 任务治理核心 |
 | P3 | `p3_distillation_pipeline.py run/status` | 知识-记忆闭环 |
 | P4 | `p4_soak_release_gate.py run/status` | 放行门禁 |
@@ -353,7 +353,7 @@ timed_out --> queued : retry
 
 - 能力注册优先于 prompt 内硬编码。
 - 写操作能力与读操作能力分级治理（guard/risk control）。
-- skill 变更应伴随路由与信任规则更新。
+- skill 调整应伴随路由与信任规则更新。
 
 ### 11.3 自然语言到命令
 
@@ -373,8 +373,8 @@ timed_out --> queued : retry
 
 ### 13.2 建议治理规则
 
-- 每次版本升级必须同步更新：架构文档、运行手册、参数速查。
-- 变更必须具备：入口、回滚、验证、审计报告路径。
+- 每次版本扩展必须同步更新：架构文档、运行手册、参数速查。
+- 调整必须具备：入口、回滚、验证、审计报告路径。
 - 发行版不可携带明文密钥，密钥应迁移到密钥管理或环境变量。
 
 ---
@@ -387,7 +387,7 @@ timed_out --> queued : retry
 - 待强化：
   - 配置治理：配置脱敏、密钥外置、权限最小化。
   - 运行稳定：死信自动回收策略、队列水位报警、多节点容灾。
-  - 产品化：安装器、环境自检、升级迁移脚本、版本兼容矩阵。
+  - 产品化：安装器、环境自检、扩展迁移脚本、版本兼容矩阵。
 
 ### 14.2 推荐演进路径
 
@@ -417,7 +417,7 @@ timed_out --> queued : retry
 
 ## 附录 E：文档版本信息
 
-- `v1.0`：建立完整技术架构主干（目录、分层、对比、流程、参数、发行建议）
+- `v1.0`：建立完整技术架构主干（目录、分层、矩阵比较、流程、参数、发行建议）
 - `v1.1`：新增术语表、接口契约、Go/No-Go 发行清单（本附录）
 
 

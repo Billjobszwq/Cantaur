@@ -283,13 +283,13 @@ def section_value(agent: str, section: str, goal: str, task_body: dict[str, Any]
         "roi_note": "已补充收益预期和投入产出判断。",
         "messaging_notes": "已补充表达口径、对外叙事和传播注意点。",
         "content_direction": "已整理内容方向、受众表达和素材组织方式。",
-        "technical_assessment": "已补充技术接入影响、改造范围和系统注意点。",
+        "technical_assessment": "已补充技术接入影响、构建范围和系统注意点。",
         "implementation_note": "已补充实现方式、脚本/协议接入和后续开发建议。",
         "review_note": "建议继续由 main 或对应专业负责人做最终采纳判断。",
         "adoption_check": "已补充采纳后的影响检查与后续验证建议。",
         "rollout_checklist": "已整理 rollout 前检查项和落地检查表。",
         "page_gap_note": "已标出当前知识页仍需补的结构或链接缺口。",
-        "evidence_gap_note": "已标出还缺失的样本、证据或对比材料。",
+        "evidence_gap_note": "已标出还缺失的样本、证据或矩阵比较材料。",
     }
     return mapping.get(section, f"{agent} 已补充 `{section}` 段落，可继续纳入后续回流。")
 

@@ -202,9 +202,9 @@ def cmd_smoke(actor: str) -> int:
             "--runtime",
             "live",
             "--title",
-            "示例行业巡检系统正式融合版完整测试综合稿",
+            "示例行业巡检系统正式协同版完整测试综合稿",
             "--goal",
-            "输出综合稿、summary 和 deliverable，生成跨 research ops finance law content 的 report.cross_functional 交付输入，用于正式融合版本完整测试。",
+            "输出综合稿、summary 和 deliverable，生成跨 research ops finance law content 的 report.cross_functional 交付输入，用于正式协同版本完整测试。",
             "--requested-by",
             actor,
             "--priority",
@@ -355,8 +355,8 @@ def build_parser() -> argparse.ArgumentParser:
     p_run.add_argument("--source-channel", default="manual")
     p_run.add_argument("--source-message-id", default="")
     p_run.add_argument("--source-session-id", default="")
-    p_run.add_argument("--decision-note", default="正式融合上线版下，允许当前任务进入 Phase 32 默认工作面。")
-    p_run.add_argument("--bridge-reason", default="当前任务通过工作区正式融合版入口进入 formal-fusion-live，使用 Phase 32 作为默认长期工作面。")
+    p_run.add_argument("--decision-note", default="正式协同上线版下，允许当前任务进入 Phase 32 默认工作面。")
+    p_run.add_argument("--bridge-reason", default="当前任务通过工作区正式协同版入口进入 formal-fusion-live，使用 Phase 32 作为默认长期工作面。")
     p_run.add_argument("--task-type", default="report.cross_functional")
     p_run.add_argument("--max-tasks", type=int, default=20)
     p_run.add_argument("--lock-ttl-seconds", type=int, default=900)

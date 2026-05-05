@@ -306,7 +306,7 @@ def build_next_actions(messages: list[dict[str, Any]]) -> list[dict[str, Any]]:
                 "priority": "medium",
                 "action_type": "inspect_page_update",
                 "title": str(body.get("summary", "") or msg["message_id"]),
-                "reason": "知识页已更新，建议快速检查页面是否需要补链接、补项目页或补对比页。",
+                "reason": "知识页已更新，建议快速检查页面是否需要补链接、补项目页或补矩阵比较页。",
                 "recommended_command": "",
                 "ref": page_path,
                 "target_agents": list(action_routes.get("inspect_page_update", ["research"])),

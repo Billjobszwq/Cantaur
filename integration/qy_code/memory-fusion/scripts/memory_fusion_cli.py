@@ -163,7 +163,7 @@ def build_semantic_candidates(task_bundle: dict, bus_bundle: dict) -> list[dict]
 def render_markdown(task_bundle: dict, bus_bundle: dict, summary: dict, semantic_candidates: list[dict]) -> str:
     task = task_bundle["task"]
     lines = [
-        f"# {task['title']} 记忆融合摘要",
+        f"# {task['title']} 记忆协同摘要",
         "",
         f"- `task_id`: `{task['task_id']}`",
         f"- `status`: `{task['status']}`",

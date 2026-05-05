@@ -89,7 +89,7 @@ def main() -> int:
     parser.add_argument('--required-agents', default='')
     parser.add_argument('--constraint', dest='constraints', action='append')
     parser.add_argument('--decision-note', default='main 判断该任务适合走跨职能 formal-fusion 协作。')
-    parser.add_argument('--bridge-reason', default='需要 research/ops/law/finance/content 多方协作，且当前适合走正式融合桥接。')
+    parser.add_argument('--bridge-reason', default='需要 research/ops/law/finance/content 多方协作，且当前适合走正式协同桥接。')
     parser.add_argument('--expected-deliverable', action='append')
     parser.add_argument('--execution-mode', default='simulate', choices=['start-only', 'simulate'])
     parser.add_argument('--risk-level', default='medium', choices=['low', 'medium', 'high', 'critical'])

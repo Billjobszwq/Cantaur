@@ -29,7 +29,7 @@
       "main-workflow",
       "main-explicit-bridge"
     ],
-    "notes": "正式融合默认版 gate。允许以 Phase 32 长期骨架进行完整测试与受控运行，不接管现网回复。"
+    "notes": "正式协同默认版 gate。允许以 Phase 32 长期骨架进行完整测试与受控运行，不接管现网回复。"
   },
   "boundaries": [
     "只服务 report.cross_functional",
@@ -40,7 +40,7 @@
     "不自动切换阶段"
   ],
   "testing_positioning": [
-    "作为当前工作区默认融合版本",
+    "作为当前工作区默认协同版本",
     "允许完整测试、正式验收与持续回归，但仍保留人工主控边界",
     "默认 intake 继续使用 delivery-framed cross-functional 表达"
   ]

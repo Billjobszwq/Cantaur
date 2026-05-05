@@ -30,7 +30,7 @@
 - 默认使用独立 SQLite 数据库
 - 默认使用独立 runtime 目录
 - 不接入现网 Feishu / session / gateway
-- 不变更当前协作路径
+- 不调整当前协作路径
 
 ## V2 协议方向
 
@@ -116,7 +116,7 @@ task/coordination messages
 - 生成下一步动作建议
 - 可选 `ack`
 
-当 `main` 使用 `--emit-actions` 时，消费器还会把动作建议升级成正式协议消息：
+当 `main` 使用 `--emit-actions` 时，消费器还会把动作建议扩展成正式协议消息：
 - `KNOWLEDGE_ACTION_SUGGESTED`
 
 当前已验证这些动作消息可进入：
@@ -154,7 +154,7 @@ task/coordination messages
 已验证运行面：
 - `${QYCLAW_HOME}/workspace/integration/qy_code/runtime/shadow-live/`
 
-这表示 bus 现在已经开始承接“知识事件审计”，但还没有把所有知识生命周期都升级成默认总线驱动流程。
+这表示 bus 现在已经开始承接“知识事件审计”，但还没有把所有知识生命周期都扩展成默认总线驱动流程。
 
 当前已形成的最小总线闭环：
 
