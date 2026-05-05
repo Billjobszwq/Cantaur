@@ -11,12 +11,12 @@ import sqlite3
 from pathlib import Path
 from typing import Iterable
 
-ROOT = Path.home() / ".openclaw"
+ROOT = Path.home() / ".qyclaw"
 WORKSPACE_ROOT = ROOT / "workspace"
 KNOWLEDGE_ROOT = WORKSPACE_ROOT / "knowledge"
 MEMORY_ROOT = WORKSPACE_ROOT / "memory"
-FUSION_OUTPUT_ROOT = WORKSPACE_ROOT / "integration" / "claudecodex" / "memory-fusion" / "output"
-BUS_SCRIPT = WORKSPACE_ROOT / "integration" / "claudecodex" / "bus" / "scripts" / "bus_cli.py"
+FUSION_OUTPUT_ROOT = WORKSPACE_ROOT / "integration" / "qy_code" / "memory-fusion" / "output"
+BUS_SCRIPT = WORKSPACE_ROOT / "integration" / "qy_code" / "bus" / "scripts" / "bus_cli.py"
 BUS_MESSAGE_CACHE = KNOWLEDGE_ROOT / "compiler" / "bus-messages"
 SUBSCRIPTION_CONFIG = KNOWLEDGE_ROOT / "schemas" / "agent-knowledge-subscriptions.v1.json"
 
@@ -496,7 +496,7 @@ def emit_knowledge_events(task_dir: Path, page_path: Path, project: str | None, 
     task_title = summary_payload.get("summary", {}).get("title") or task_dir.name
 
     page_payload = {
-        "protocol": "openclaw-a2a/v1",
+        "protocol": "qyclaw-a2a/v1",
         "message_type": "KNOWLEDGE_PAGE_UPDATED",
         "message_id": f"{task_id}-knowledge-page-updated",
         "task_id": task_id,
@@ -535,7 +535,7 @@ def emit_knowledge_events(task_dir: Path, page_path: Path, project: str | None, 
             normalized_type = normalized_candidate_type(candidate_type)
             review_queue_ref = review_queue_output_path(task_id, idx, str(candidate.get("title", f"{task_title} candidate {idx}")))
             candidate_payload = {
-                "protocol": "openclaw-a2a/v1",
+                "protocol": "qyclaw-a2a/v1",
                 "message_type": "KNOWLEDGE_CANDIDATE_CREATED",
                 "message_id": f"{task_id}-knowledge-candidate-{idx:03d}",
                 "task_id": task_id,
@@ -889,7 +889,7 @@ def build_review_report(month_key: str | None, limit: int) -> Path:
 
 
 def collect_convergence_summaries(runtime_name: str, limit: int) -> list[dict]:
-    runtime_root = WORKSPACE_ROOT / "integration" / "claudecodex" / "runtime" / runtime_name / "knowledge-convergence"
+    runtime_root = WORKSPACE_ROOT / "integration" / "qy_code" / "runtime" / runtime_name / "knowledge-convergence"
     if not runtime_root.exists():
         return []
     rows: list[dict] = []
@@ -928,7 +928,7 @@ def recommend_convergence_decision(row: dict) -> tuple[str, str]:
 def suggested_review_command(runtime_name: str, decision: str) -> str:
     month = dt.date.today().strftime("%Y-%m")
     return (
-        "python3 ${OPENCLAW_HOME}/workspace/scripts/knowledge_base.py "
+        "python3 ${QYCLAW_HOME}/workspace/scripts/knowledge_base.py "
         f"review-decide --month {month} --id <RQ-ID> --decision {decision} --reviewer main --note \"依据 convergence-report 处理\""
     )
 
@@ -936,7 +936,7 @@ def suggested_review_command(runtime_name: str, decision: str) -> str:
 def suggested_review_command_for_id(month_key: str, review_id: str, decision: str, note: str | None = None) -> str:
     review_note = note or "依据 convergence-workbench 处理"
     return (
-        "python3 ${OPENCLAW_HOME}/workspace/scripts/knowledge_base.py "
+        "python3 ${QYCLAW_HOME}/workspace/scripts/knowledge_base.py "
         f"review-decide --month {month_key} --id {review_id} --decision {decision} "
         f"--reviewer main --note \"{review_note}\""
     )
@@ -946,7 +946,7 @@ def suggested_review_batch_command(month_key: str, review_ids: list[str], decisi
     review_note = note or "依据 convergence-workbench 批量处理"
     args = " ".join(f"--id {review_id}" for review_id in review_ids)
     return (
-        "python3 ${OPENCLAW_HOME}/workspace/scripts/knowledge_base.py "
+        "python3 ${QYCLAW_HOME}/workspace/scripts/knowledge_base.py "
         f"review-decide-batch --month {month_key} {args} --decision {decision} "
         f"--reviewer main --note \"{review_note}\" --report-limit 200"
     )
@@ -1233,7 +1233,7 @@ def emit_review_decision(task_dir: Path, review_id: str, decision: str, reviewer
             created_at=payload["created_at"],
         )
         message_payload = {
-            "protocol": "openclaw-a2a/v1",
+            "protocol": "qyclaw-a2a/v1",
             "message_type": "REVIEW_DECISION_RECORDED",
             "message_id": f"{task_id}-review-decision-recorded-{review_id.lower()}",
             "task_id": task_id,
@@ -1385,7 +1385,7 @@ def emit_promotion_event(task_dir: Path, promoted_path: Path, message_type: str,
     bus_runtime = Path(context["bus_runtime"])
     bus_db = Path(context["bus_db"])
     payload = {
-        "protocol": "openclaw-a2a/v1",
+        "protocol": "qyclaw-a2a/v1",
         "message_type": message_type,
         "message_id": f"{task_id}-{safe_slug(message_type)}-{safe_slug(title, 24)}",
         "task_id": task_id,
@@ -1602,7 +1602,7 @@ def lint_knowledge() -> dict:
     for page in KNOWLEDGE_ROOT.rglob("*.md"):
         text = page.read_text(encoding="utf-8", errors="ignore")
         for match in MARKDOWN_LINK_RE.findall(text):
-            if match.startswith(str(Path.home() / ".openclaw/workspace/")):
+            if match.startswith(str(Path.home() / ".qyclaw/workspace/")):
                 linked_paths.add(match)
     orphans = [str(p) for p in md_files if str(p) not in linked_paths]
     empty_pages = [str(p) for p in md_files if len(p.read_text(encoding="utf-8").strip()) < 40]
@@ -1657,7 +1657,7 @@ def backfill_continuity() -> dict:
     for path in instreet_files:
         if path.name == "README.md":
             continue
-        instreet_lines.append(f"- [{path.stem}](${OPENCLAW_HOME}/workspace/{relative_to_workspace(path)})")
+        instreet_lines.append(f"- [{path.stem}](${QYCLAW_HOME}/workspace/{relative_to_workspace(path)})")
     write_text(instreet_page, "\n".join(instreet_lines).rstrip() + "\n")
 
     categories = {
@@ -1692,14 +1692,14 @@ def backfill_continuity() -> dict:
             "## Canonical Rule",
             "",
             "- 历史语义文件继续保留，不做破坏性迁移",
-            "- 新的主题知识优先进入 `${OPENCLAW_HOME}/workspace/knowledge/`",
+            "- 新的主题知识优先进入 `${QYCLAW_HOME}/workspace/knowledge/`",
             "- 旧 `20-semantic/` 作为蒸馏输出与兼容层继续可用",
             "",
             "## Key Entry Files",
             "",
-            f"- [MEMORY semantic index](${OPENCLAW_HOME}/workspace/{relative_to_workspace(semantic_root / 'MEMORY.md')})",
-            f"- [decisions index](${OPENCLAW_HOME}/workspace/{relative_to_workspace(semantic_root / 'decisions.md')})",
-            f"- [lessons index](${OPENCLAW_HOME}/workspace/{relative_to_workspace(semantic_root / 'lessons.md')})",
+            f"- [MEMORY semantic index](${QYCLAW_HOME}/workspace/{relative_to_workspace(semantic_root / 'MEMORY.md')})",
+            f"- [decisions index](${QYCLAW_HOME}/workspace/{relative_to_workspace(semantic_root / 'decisions.md')})",
+            f"- [lessons index](${QYCLAW_HOME}/workspace/{relative_to_workspace(semantic_root / 'lessons.md')})",
         ]
     )
     write_text(semantic_page, "\n".join(semantic_lines).rstrip() + "\n")
@@ -1736,7 +1736,7 @@ def backfill_continuity() -> dict:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Unified OpenClaw knowledge system entry")
+    parser = argparse.ArgumentParser(description="Unified QYclaw knowledge system entry")
     sub = parser.add_subparsers(dest="cmd", required=True)
 
     sub.add_parser("init")

@@ -8,6 +8,7 @@ from datetime import datetime, timezone, timedelta
 CST = timezone(timedelta(hours=8))
 DASHBOARD_DIR = Path(__file__).parent
 PORT = 8899
+BACKEND_BIN = os.environ.get("CANTAUR_BACKEND_BIN", "qyclaw-core")
 
 class Handler(BaseHTTPRequestHandler):
     def log_message(self, format, *args):
@@ -49,7 +50,7 @@ class Handler(BaseHTTPRequestHandler):
         """触发 Gateway 重启"""
         try:
             result = subprocess.run(
-                "openclaw gateway restart 2>&1",
+                f"{BACKEND_BIN} gateway restart 2>&1",
                 shell=True, capture_output=True, text=True, timeout=30
             )
             success = result.returncode == 0
@@ -65,7 +66,7 @@ class Handler(BaseHTTPRequestHandler):
 def fix_config():
     """Auto-fix invalid plugin entries in config"""
     try:
-        cf = Path(str(Path.home() / ".openclaw/openclaw.json"))
+        cf = Path(str(Path.home() / ".qyclaw/qyclaw.json"))
         d = json.loads(cf.read_text())
         plugins = d.get('plugins',{}).get('entries',{})
         bad = [k for k in plugins if k not in ('feishu',)]
@@ -83,7 +84,7 @@ def get_live_data():
     # Gateway
     gw_running = False
     try:
-        r = subprocess.run("openclaw gateway status 2>/dev/null", shell=True, capture_output=True, text=True, timeout=10)
+        r = subprocess.run(f"{BACKEND_BIN} gateway status 2>/dev/null", shell=True, capture_output=True, text=True, timeout=10)
         gw_running = "running" in (r.stdout).lower() and "active" in (r.stdout).lower()
     except: pass
     
@@ -91,7 +92,7 @@ def get_live_data():
     # Cron jobs
     cron_jobs = []
     try:
-        r = subprocess.run("openclaw cron list 2>/dev/null", shell=True, capture_output=True, text=True, timeout=10)
+        r = subprocess.run(f"{BACKEND_BIN} cron list 2>/dev/null", shell=True, capture_output=True, text=True, timeout=10)
         for line in r.stdout.split('\n'):
             parts = line.split()
             if len(parts) >= 8 and not line.startswith('ID') and not line.startswith('Config'):
@@ -105,14 +106,14 @@ def get_live_data():
     agent_ids = ["main","dev","content","ops","law","finance","research"]
     roles = {"main":"主控协调官","dev":"开发与架构","content":"内容创作","ops":"运维与执行","law":"法务合规","finance":"财务","research":"研究与情报"}
     for aid in agent_ids:
-        sd = Path(fstr(Path.home() / ".openclaw/agents/{aid}/sessions"))
+        sd = Path(str(Path.home() / f".qyclaw/agents/{aid}/sessions"))
         count = len(list(sd.glob("*.json"))) if sd.exists() else 0
         agents.append({"id":aid,"name":aid,"role":roles.get(aid,""),"sessions":count,"active":count>0})
     
     # Token from sessions.json
     token_ctx, token_used, model = 1000000, 38000, "deepseek-v4-pro"
     try:
-        sf = Path(str(Path.home() / ".openclaw/agents/main/sessions/sessions.json"))
+        sf = Path(str(Path.home() / ".qyclaw/agents/main/sessions/sessions.json"))
         if sf.exists():
             data = json.loads(sf.read_text())
             sessions = data if isinstance(data, list) else list(data.values())
@@ -126,17 +127,17 @@ def get_live_data():
     # LaunchAgents
     launchd = []
     try:
-        for p in (Path.home() / "Library" / "LaunchAgents").glob("ai.openclaw.*.plist"):
-            name = p.stem.replace("ai.openclaw.","")
+        for p in (Path.home() / "Library" / "LaunchAgents").glob("ai.qyclaw.*.plist"):
+            name = p.stem.replace("ai.qyclaw.","")
             r = subprocess.run(f"launchctl list | grep '{name}'", shell=True, capture_output=True, text=True, timeout=5)
             launchd.append({"name":name,"status":"active" if r.stdout.strip() else "idle"})
     except: pass
     
     # Memory
-    daily = Path(str(Path.home() / ".openclaw/workspace/memory/10-episodic/daily"))
+    daily = Path(str(Path.home() / ".qyclaw/workspace/memory/10-episodic/daily"))
     today_file = daily / now.strftime("%Y-%m-%d") if daily.exists() else None
     today_kb = round(today_file.stat().st_size/1024,1) if today_file and today_file.exists() else 0
-    knowledge = len(list(Path(str(Path.home() / ".openclaw/workspace/knowledge")).rglob("*.md"))) if Path(str(Path.home() / ".openclaw/workspace/knowledge")).exists() else 0
+    knowledge = len(list(Path(str(Path.home() / ".qyclaw/workspace/knowledge")).rglob("*.md"))) if Path(str(Path.home() / ".qyclaw/workspace/knowledge")).exists() else 0
     
     return {
         "timestamp": now.strftime("%Y-%m-%d %H:%M:%S"),
@@ -156,12 +157,12 @@ def get_live_data():
 
 def get_doctor():
     fix_config()
-    """OpenClaw doctor 诊断结果"""
+    """QYclaw doctor 诊断结果"""
     try:
-        r = subprocess.run("openclaw doctor 2>/dev/null", shell=True, capture_output=True, text=True, timeout=30)
+        r = subprocess.run(f"{BACKEND_BIN} doctor 2>/dev/null", shell=True, capture_output=True, text=True, timeout=30)
         output = r.stdout
     except:
-        output = "无法执行 openclaw doctor"
+        output = f"无法执行 {BACKEND_BIN} doctor"
     
     # Parse key health indicators
     checks = []

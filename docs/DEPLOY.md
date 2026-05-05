@@ -4,21 +4,21 @@
 2. Run:
 
 ```bash
-OPENCLAW_HOME=$HOME/.openclaw bash ./install.sh
+QYCLAW_HOME=$HOME/.qyclaw bash ./install.sh
 ```
 
 3. Edit runtime configs:
-- `$OPENCLAW_HOME/.env`
-- `$OPENCLAW_HOME/openclaw.json`
+- `$QYCLAW_HOME/.env`
+- `$QYCLAW_HOME/qyclaw.json`
 
 4. Start services:
 
 ```bash
-$OPENCLAW_HOME/workspace/bin/qyclaw start
+$QYCLAW_HOME/workspace/bin/qyclaw start
 ```
 
 5. Open dashboard:
 
 ```bash
-$OPENCLAW_HOME/workspace/bin/qyclaw panel
+$QYCLAW_HOME/workspace/bin/qyclaw panel
 ```

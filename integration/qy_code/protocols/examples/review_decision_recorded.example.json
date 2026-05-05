@@ -1,0 +1,20 @@
+{
+  "protocol": "qyclaw-a2a/v1",
+  "message_type": "REVIEW_DECISION_RECORDED",
+  "message_id": "task-001-review-decision-recorded-rq001",
+  "task_id": "task-001",
+  "trace_id": "trace-001",
+  "parent_task_id": null,
+  "from": "main",
+  "to": "main",
+  "created_at": "2026-04-10T16:20:00+08:00",
+  "body": {
+    "review_id": "RQ-001",
+    "decision": "observe",
+    "status_after": "observed",
+    "reviewer": "main",
+    "note": "先保留观察，等待更多样本。",
+    "queue_path": "/abs/path/review-queue/RQ-20260410-001.md",
+    "promoted_path": ""
+  }
+}

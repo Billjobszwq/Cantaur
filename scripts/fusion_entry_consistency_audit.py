@@ -10,10 +10,10 @@ from pathlib import Path
 from typing import Any
 
 
-ROOT = Path.home() / ".openclaw"
+ROOT = Path.home() / ".qyclaw"
 WORKSPACE = ROOT / "workspace"
-LIVE_LINK = WORKSPACE / "integration" / "claudecodex" / "live-link"
-INTEGRATION = WORKSPACE / "integration" / "claudecodex"
+LIVE_LINK = WORKSPACE / "integration" / "qy_code" / "live-link"
+INTEGRATION = WORKSPACE / "integration" / "qy_code"
 
 FORMAL_VERSION = WORKSPACE / "scripts" / "formal_fusion_version.py"
 FORMAL_LIVE = LIVE_LINK / "scripts" / "formal_fusion_live_entry.py"
@@ -70,7 +70,7 @@ def options_for_run_help(path: Path) -> set[str]:
 def extract_result_keys(path: Path) -> set[str]:
     text = path.read_text(encoding="utf-8")
     keys = set()
-    for key in ("status", "task_id", "lifecycle_execution", "hermes_fusion", "workflow_summary_json", "workflow_summary_md"):
+    for key in ("status", "task_id", "lifecycle_execution", "unique_fusion", "workflow_summary_json", "workflow_summary_md"):
         if f"\"{key}\"" in text:
             keys.add(key)
     return keys
@@ -93,19 +93,19 @@ def main() -> int:
         "--priority",
         "--source-channel",
         "--task-type",
-        "--sync-hermes",
-        "--no-sync-hermes",
-        "--hermes-knowledge-limit",
-        "--hermes-review-limit",
-        "--hermes-timeout-scan",
-        "--hermes-apply-auto",
-        "--hermes-autopilot-tier",
+        "--sync-unique",
+        "--no-sync-unique",
+        "--unique-knowledge-limit",
+        "--unique-review-limit",
+        "--unique-timeout-scan",
+        "--unique-apply-auto",
+        "--unique-autopilot-tier",
     }
     required_result_keys = {
         "status",
         "task_id",
         "lifecycle_execution",
-        "hermes_fusion",
+        "unique_fusion",
         "workflow_summary_json",
         "workflow_summary_md",
     }

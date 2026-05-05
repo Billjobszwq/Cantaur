@@ -1,7 +1,7 @@
 # QYclaw 技术架构白皮书（v1.2-对外发布版）
 
 - 文档版本：`v1.2-public`
-- 系统代号：`QYclaw`（基于 OpenClaw 的工程化增强发行线）
+- 系统代号：`QYclaw`（基于 QYclaw 的工程化增强发行线）
 - 编写日期：`2026-05-04`
 - 适用范围：多 Agent 协同、知识记忆驱动、可治理可观测的企业级 Agent 操作系统
 - 说明：本版本为对外交流与论文/分享用途，已脱敏并移除内部运维细节。
@@ -13,7 +13,7 @@
 1. 架构定位与设计目标
 2. 系统总架构与适用平台
 3. 目录与代码分层
-4. 与原始 OpenClaw 的对比（QYclaw 增强矩阵）
+4. 与原始 QYclaw 的对比（QYclaw 增强矩阵）
 5. Agent 系统与多 Agent 通讯架构
 6. 记忆与知识体系
 7. 记忆与知识蒸馏与迭代机制
@@ -76,51 +76,51 @@ P --> E
 
 ### 3.1 顶层目录抽象
 
-建议以 `${OPENCLAW_HOME}` 表示安装根目录（默认示例：`${OPENCLAW_HOME}`）。
+建议以 `${QYCLAW_HOME}` 表示安装根目录（默认示例：`${QYCLAW_HOME}`）。
 
 ```text
-${OPENCLAW_HOME}
-├─ openclaw.json                     # 系统主配置
+${QYCLAW_HOME}
+├─ qyclaw.json                     # 系统主配置
 ├─ logs/                             # 运行与维护日志
 ├─ cron/                             # 定时任务状态
 ├─ memory/                           # 全局会话/记忆运行态
 └─ workspace/                        # 工程主目录
    ├─ scripts/                       # 生产脚本入口（P1~P4、运维、桥接）
-   ├─ integration/claudecodex/       # 融合内核（协议/总线/生命周期）
+   ├─ integration/qy_code/       # 融合内核（协议/总线/生命周期）
    ├─ knowledge/                     # 统一知识主根
    ├─ memory/                        # 分层记忆主根
    ├─ memory-system/                 # 记忆系统规则与路由
    ├─ agents/                        # 角色化 agent 资产
    ├─ skills/                        # skill 体系
-   └─ OpenClaw-MultiAgent-Runbook.md # 运行手册
+   └─ QYclaw-MultiAgent-Runbook.md # 运行手册
 ```
 
 ### 3.2 核心子系统目录
 
 ```text
-workspace/integration/claudecodex/
+workspace/integration/qy_code/
 ├─ live-link/scripts/                # 生命周期与执行主链
 ├─ bus/scripts/                      # bus_cli（send/ack/retry/blackboard）
-├─ protocols/scripts/                # validate_openclaw_a2a
+├─ protocols/scripts/                # validate_qyclaw_a2a
 ├─ control/scripts/                  # coordinator_cli
 └─ runtime/live/                     # 线上运行态（DB+报告+队列）
 ```
 
 ### 3.3 关键生产入口（当前版本）
 
-- 正式融合入口：`${OPENCLAW_HOME}/workspace/scripts/formal_fusion_version.py`
-- 生命周期入口：`${OPENCLAW_HOME}/workspace/integration/claudecodex/live-link/scripts/main_bridge_lifecycle.py`
-- 总线入口：`${OPENCLAW_HOME}/workspace/integration/claudecodex/bus/scripts/bus_cli.py`
-- 协议校验器：`${OPENCLAW_HOME}/workspace/integration/claudecodex/protocols/scripts/validate_openclaw_a2a.py`
-- 维护总入口：`${OPENCLAW_HOME}/workspace/scripts/scheduled_maintenance.sh`
+- 正式融合入口：`${QYCLAW_HOME}/workspace/scripts/formal_fusion_version.py`
+- 生命周期入口：`${QYCLAW_HOME}/workspace/integration/qy_code/live-link/scripts/main_bridge_lifecycle.py`
+- 总线入口：`${QYCLAW_HOME}/workspace/integration/qy_code/bus/scripts/bus_cli.py`
+- 协议校验器：`${QYCLAW_HOME}/workspace/integration/qy_code/protocols/scripts/validate_qyclaw_a2a.py`
+- 维护总入口：`${QYCLAW_HOME}/workspace/scripts/scheduled_maintenance.sh`
 
 ---
 
-## 4. 与原始 OpenClaw 的对比（QYclaw 增强矩阵）
+## 4. 与原始 QYclaw 的对比（QYclaw 增强矩阵）
 
-> 说明：这里的“原始 OpenClaw”是指以会话响应与渠道路由为主的基础形态；QYclaw 是在其上叠加协议化协作、生命周期治理与蒸馏闭环的增强线。
+> 说明：这里的“原始 QYclaw”是指以会话响应与渠道路由为主的基础形态；QYclaw 是在其上叠加协议化协作、生命周期治理与蒸馏闭环的增强线。
 
-| 维度 | 原始 OpenClaw（基线） | QYclaw（当前） | 架构价值 |
+| 维度 | 原始 QYclaw（基线） | QYclaw（当前） | 架构价值 |
 | --- | --- | --- | --- |
 | 协作方式 | 会话内隐式协作 | A2A 协议 + TaskBoard + Bus | 协作可审计、可回放 |
 | 状态管理 | 以消息上下文为主 | 显式任务状态机（trigger/run/retry/terminate） | 故障可恢复 |
@@ -178,7 +178,7 @@ Bus->>Main: knowledge digest & next actions
 - 存储：SQLite + 文件系统目录（轻量可迁移）。
 - 语义：`queued -> acked / retry_wait / dead_letter`。
 - 保障：重试、死信、审计、blackboard task 上下文共享。
-- 强校验：默认 `OPENCLAW_A2A_STRICT_SCHEMA=1`。
+- 强校验：默认 `QYCLAW_A2A_STRICT_SCHEMA=1`。
 
 ---
 
@@ -232,7 +232,7 @@ F --> A
 
 实现入口：
 
-- `${OPENCLAW_HOME}/workspace/scripts/p3_distillation_pipeline.py`
+- `${QYCLAW_HOME}/workspace/scripts/p3_distillation_pipeline.py`
 
 ### 7.2 收敛策略
 
@@ -248,7 +248,7 @@ F --> A
 
 实现入口：
 
-- `${OPENCLAW_HOME}/workspace/scripts/p4_soak_release_gate.py`
+- `${QYCLAW_HOME}/workspace/scripts/p4_soak_release_gate.py`
 
 ---
 
@@ -256,14 +256,14 @@ F --> A
 
 ### 8.1 Provider 抽象
 
-模型配置位于 `openclaw.json -> models.providers`，当前实现为 OpenAI-compatible provider 抽象：
+模型配置位于 `qyclaw.json -> models.providers`，当前实现为 OpenAI-compatible provider 抽象：
 
 - provider 维度：`baseUrl`、`api`、`models[]`
 - model 维度：`id`、`reasoning`、`contextWindow`、`maxTokens`
 
 ### 8.2 主备模型策略
 
-在 `openclaw.json -> agents.defaults.model`：
+在 `qyclaw.json -> agents.defaults.model`：
 
 - `primary`：主模型
 - `fallbacks[]`：故障/拒绝时降级链
@@ -310,7 +310,7 @@ timed_out --> queued : retry
 
 钩子分为两类：
 
-- 平台内置钩子：`openclaw.json -> hooks.internal`（当前启用 `session-memory`）。
+- 平台内置钩子：`qyclaw.json -> hooks.internal`（当前启用 `session-memory`）。
 - 维护链钩子：由 `scheduled_maintenance.sh` 编排的治理脚本链（P1/P2/P3/P4）。
 
 ---
@@ -366,8 +366,8 @@ timed_out --> queued : retry
 ### 13.1 文档分层
 
 - 架构主文档：本白皮书（跨项目抽象层）。
-- 运行手册：`OpenClaw-MultiAgent-Runbook.md`（操作层）。
-- 阶段文档：`integration/claudecodex/live-link/PHASE*.md`（演进层）。
+- 运行手册：`QYclaw-MultiAgent-Runbook.md`（操作层）。
+- 阶段文档：`integration/qy_code/live-link/PHASE*.md`（演进层）。
 - 策略文档：`knowledge/schemas/*.json`、`live-link/config/*.json`（策略层）。
 
 ### 13.2 建议治理规则
@@ -403,7 +403,7 @@ timed_out --> queued : retry
 | --- | --- | --- |
 | Control Plane | 负责系统调度、状态推进、策略执行的控制层 | `formal_fusion_version.py` + `main_bridge_lifecycle.py` |
 | Data Plane | 承载业务消息、任务数据、知识与记忆数据的运行层 | `bus.db`、`task-board.db`、`knowledge/`、`memory/` |
-| A2A Protocol | Agent-to-Agent 内部协作协议，定义 envelope 与 message body schema | `openclaw-a2a/v1` |
+| A2A Protocol | Agent-to-Agent 内部协作协议，定义 envelope 与 message body schema | `qyclaw-a2a/v1` |
 | TaskBoard | 任务台账与状态机的持久化层 | `task-board.db` |
 | Bus Runtime | 消息文件队列与审计目录（inbox/outbox/dead-letter） | `runtime/live/bus-runtime/` |
 | Blackboard | task 维度共享上下文键值区 | `blackboard_entries` + 文件镜像 |

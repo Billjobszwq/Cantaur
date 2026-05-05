@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""OpenCLI router wrapper for OpenClaw agents.
+"""OpenCLI router wrapper for QYclaw agents.
 
 Provides a stable JSON envelope around opencli invocations.
 """
@@ -58,7 +58,7 @@ def _print_result(result: dict[str, Any]) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="OpenClaw OpenCLI router")
+    parser = argparse.ArgumentParser(description="QYclaw OpenCLI router")
     sub = parser.add_subparsers(dest="action", required=True)
 
     discover = sub.add_parser("discover", help="List available opencli commands")

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Policy guard + circuit breaker + auto fallback executor for OpenCLI in OpenClaw."""
+"""Policy guard + circuit breaker + auto fallback executor for OpenCLI in QYclaw."""
 
 from __future__ import annotations
 
@@ -13,12 +13,12 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-POLICY_PATH = Path(str(Path.home() / ".openclaw/workspace/config/opencli-policy.json"))
-ROUTER_PATH = Path(str(Path.home() / ".openclaw/workspace/scripts/opencli_router.py"))
-TAVILY_SCRIPT = Path(str(Path.home() / ".openclaw/workspace/skills/tavily-search/scripts/tavily_search.py"))
-LOG_PATH = Path(str(Path.home() / ".openclaw/logs/opencli-invocations.jsonl"))
-STATE_PATH = Path(str(Path.home() / ".openclaw/state/opencli-circuit.json"))
-ALERT_LOG = Path(str(Path.home() / ".openclaw/logs/maintenance-alert.log"))
+POLICY_PATH = Path(str(Path.home() / ".qyclaw/workspace/config/opencli-policy.json"))
+ROUTER_PATH = Path(str(Path.home() / ".qyclaw/workspace/scripts/opencli_router.py"))
+TAVILY_SCRIPT = Path(str(Path.home() / ".qyclaw/workspace/skills/tavily-search/scripts/tavily_search.py"))
+LOG_PATH = Path(str(Path.home() / ".qyclaw/logs/opencli-invocations.jsonl"))
+STATE_PATH = Path(str(Path.home() / ".qyclaw/state/opencli-circuit.json"))
+ALERT_LOG = Path(str(Path.home() / ".qyclaw/logs/maintenance-alert.log"))
 
 WRITE_VERBS = (
     "post",
@@ -568,7 +568,7 @@ def build_parser() -> argparse.ArgumentParser:
     sub = p.add_subparsers(dest="action", required=True)
 
     route = sub.add_parser("route", help="Evaluate route and policy for a command")
-    route.add_argument("--agent", default=os.environ.get("OPENCLAW_AGENT_ID", "main"))
+    route.add_argument("--agent", default=os.environ.get("QYCLAW_AGENT_ID", "main"))
     route.add_argument("--site", required=True)
     route.add_argument("--command", required=True)
     route.add_argument("--allow-write", action="store_true")
@@ -576,7 +576,7 @@ def build_parser() -> argparse.ArgumentParser:
     route.set_defaults(func=cmd_route)
 
     run = sub.add_parser("run", help="Run command with policy guard")
-    run.add_argument("--agent", default=os.environ.get("OPENCLAW_AGENT_ID", "main"))
+    run.add_argument("--agent", default=os.environ.get("QYCLAW_AGENT_ID", "main"))
     run.add_argument("--site", required=True)
     run.add_argument("--command", required=True)
     run.add_argument("--format", default="json", choices=["json", "yaml", "table", "plain", "md", "csv"])

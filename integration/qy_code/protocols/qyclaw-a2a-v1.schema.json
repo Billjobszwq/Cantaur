@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "qyclaw-a2a/v1",
+  "title": "qyclaw-a2a/v1",
+  "type": "object",
+  "required": [
+    "protocol",
+    "message_type",
+    "message_id",
+    "task_id",
+    "trace_id",
+    "parent_task_id",
+    "from",
+    "to",
+    "created_at",
+    "body"
+  ],
+  "properties": {
+    "protocol": {
+      "type": "string",
+      "const": "qyclaw-a2a/v1"
+    },
+    "message_type": {
+      "type": "string",
+      "enum": [
+        "TASK",
+        "RESULT",
+        "REVIEW",
+        "CONSULT",
+        "EVENT",
+        "ESCALATE",
+        "PERMISSION_REQUEST",
+        "PERMISSION_RESPONSE",
+        "KNOWLEDGE_CANDIDATE_CREATED",
+        "KNOWLEDGE_PAGE_UPDATED",
+        "MEMORY_CANDIDATE_PROMOTED",
+        "PROCEDURE_PROMOTED",
+        "REVIEW_DECISION_RECORDED",
+        "KNOWLEDGE_ACTION_SUGGESTED"
+      ]
+    },
+    "message_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "task_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "trace_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "parent_task_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "from": {
+      "type": "string",
+      "minLength": 1
+    },
+    "to": {
+      "type": "string",
+      "minLength": 1
+    },
+    "created_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "body": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

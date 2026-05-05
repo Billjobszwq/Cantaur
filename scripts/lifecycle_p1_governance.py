@@ -10,9 +10,9 @@ from pathlib import Path
 from typing import Any
 
 
-ROOT = Path.home() / ".openclaw"
+ROOT = Path.home() / ".qyclaw"
 WORKSPACE = ROOT / "workspace"
-INTEGRATION = WORKSPACE / "integration" / "claudecodex"
+INTEGRATION = WORKSPACE / "integration" / "qy_code"
 LIVE_LINK = INTEGRATION / "live-link"
 RUNTIME_BASE = INTEGRATION / "runtime"
 LIFECYCLE_ENTRY = LIVE_LINK / "scripts" / "main_bridge_lifecycle.py"

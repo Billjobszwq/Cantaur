@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify OpenCLI availability and auto-degrade behavior for all OpenClaw agents."""
+"""Verify OpenCLI availability and auto-degrade behavior for all QYclaw agents."""
 
 from __future__ import annotations
 
@@ -9,7 +9,7 @@ import sys
 from dataclasses import dataclass
 from pathlib import Path
 
-GUARD = Path(str(Path.home() / ".openclaw/workspace/scripts/opencli_guard.py"))
+GUARD = Path(str(Path.home() / ".qyclaw/workspace/scripts/opencli_guard.py"))
 
 
 @dataclass(frozen=True)

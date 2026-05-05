@@ -8,14 +8,14 @@ import re
 from pathlib import Path
 from typing import Any
 
-ROOT = Path.home() / ".openclaw"
+ROOT = Path.home() / ".qyclaw"
 WORKSPACE = ROOT / "workspace"
-INTEGRATION = WORKSPACE / "integration" / "claudecodex"
+INTEGRATION = WORKSPACE / "integration" / "qy_code"
 LIVE_LINK = INTEGRATION / "live-link"
 RUNTIME_BASE = INTEGRATION / "runtime"
 LOG_ROOT = ROOT / "logs"
 POLICY_PATH = LIVE_LINK / "config" / "p4-soak-release-gate.v1.json"
-ROLLOUT_POLICY_PATH = WORKSPACE / "knowledge" / "schemas" / "hermes-fusion-rollout.v1.json"
+ROLLOUT_POLICY_PATH = WORKSPACE / "knowledge" / "schemas" / "unique-fusion-rollout.v1.json"
 
 
 def now_iso() -> str:

@@ -1,0 +1,47 @@
+{
+  "profile_id": "formal-fusion-live-v1",
+  "profile_label": "Formal Fusion Live Version 01",
+  "runtime": "live",
+  "default_surface": {
+    "main_entry_doc": "${QYCLAW_HOME}/workspace/integration/qy_code/live-link/PHASE32-MAIN-DAILY-FUSION-COORDINATION-KERNEL.md",
+    "loop_doc": "${QYCLAW_HOME}/workspace/integration/qy_code/live-link/PHASE32-EMBEDDED-FUSION-COORDINATION-KERNEL-LOOP.md",
+    "stable_signals_doc": "${QYCLAW_HOME}/workspace/integration/qy_code/live-link/PHASE32-STABLE-COORDINATION-KERNEL-SIGNALS.md"
+  },
+  "governance": {
+    "window_doc": "${QYCLAW_HOME}/workspace/integration/qy_code/live-link/REAL-VERSION-LIMITED-LIVE-WINDOW.md",
+    "launch_checklist_doc": "${QYCLAW_HOME}/workspace/integration/qy_code/live-link/REAL-VERSION-LAUNCH-CHECKLIST.md",
+    "go_live_review_doc": "${QYCLAW_HOME}/workspace/integration/qy_code/live-link/REAL-VERSION-GO-LIVE-REVIEW-01.md",
+    "replacement_decision_doc": "${QYCLAW_HOME}/workspace/integration/qy_code/live-link/REAL-VERSION-REPLACEMENT-DECISION-01.md",
+    "cutover_doc": "${QYCLAW_HOME}/workspace/integration/qy_code/live-link/REAL-VERSION-CUTOVER-PLAN-01.md",
+    "rollback_doc": "${QYCLAW_HOME}/workspace/integration/qy_code/live-link/REAL-VERSION-ROLLBACK-CUTOVER-01.md"
+  },
+  "gate_profile": {
+    "enabled": true,
+    "runtime": "live",
+    "require_classifier_allow_bridge": true,
+    "allowed_task_types": [
+      "report.cross_functional"
+    ],
+    "allowed_source_channels": [
+      "manual",
+      "main-workflow",
+      "main-explicit-bridge"
+    ],
+    "workflow_mode": "enforce",
+    "execution_mode": "start-only",
+    "notes": "正式融合上线版 gate。允许以 Phase 32 长期骨架进行默认融合运行，并保留人工最终回复边界。"
+  },
+  "boundaries": [
+    "只服务 report.cross_functional",
+    "不自动接管最终回复",
+    "不自动外发",
+    "不自动执行高风险动作",
+    "不默认切换主链",
+    "不自动切换阶段"
+  ],
+  "testing_positioning": [
+    "作为当前工作区默认上线融合版本",
+    "允许日常运行、正式验收与持续回归，但仍保留人工主控边界",
+    "默认 intake 继续使用 delivery-framed cross-functional 表达"
+  ]
+}

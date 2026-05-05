@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-OPENCLAW_HOME="${OPENCLAW_HOME:-$HOME/.openclaw}"
-WORKSPACE="${OPENCLAW_HOME}/workspace"
-DASHBOARD_PID="${OPENCLAW_HOME}/state/dashboard.pid"
+QYCLAW_HOME="${QYCLAW_HOME:-$HOME/.qyclaw}"
+WORKSPACE="${QYCLAW_HOME}/workspace"
+DASHBOARD_PID="${QYCLAW_HOME}/state/dashboard.pid"
 DASHBOARD_HOST="${QYCLAW_DASHBOARD_HOST:-127.0.0.1}"
 DASHBOARD_PORT="${QYCLAW_DASHBOARD_PORT:-8899}"
+BACKEND_BIN="${CANTAUR_BACKEND_BIN:-qyclaw-core}"
 
-mkdir -p "${OPENCLAW_HOME}/state" "${OPENCLAW_HOME}/logs"
+mkdir -p "${QYCLAW_HOME}/state" "${QYCLAW_HOME}/logs"
 
 cmd="${1:-help}"
 shift || true
@@ -17,7 +18,7 @@ start_dashboard() {
     echo "dashboard already running"
     return 0
   fi
-  nohup python3 "${WORKSPACE}/dashboard/server.py" >"${OPENCLAW_HOME}/logs/dashboard.log" 2>&1 &
+  nohup python3 "${WORKSPACE}/dashboard/server.py" >"${QYCLAW_HOME}/logs/dashboard.log" 2>&1 &
   echo $! > "${DASHBOARD_PID}"
   echo "dashboard started: http://${DASHBOARD_HOST}:${DASHBOARD_PORT}"
 }
@@ -35,20 +36,20 @@ stop_dashboard() {
 
 case "$cmd" in
   init)
-    mkdir -p "${OPENCLAW_HOME}" "${OPENCLAW_HOME}/logs" "${OPENCLAW_HOME}/state"
-    mkdir -p "${OPENCLAW_HOME}/workspace"
-    echo "initialized: ${OPENCLAW_HOME}"
+    mkdir -p "${QYCLAW_HOME}" "${QYCLAW_HOME}/logs" "${QYCLAW_HOME}/state"
+    mkdir -p "${QYCLAW_HOME}/workspace"
+    echo "initialized: ${QYCLAW_HOME}"
     ;;
   start)
-    if command -v openclaw >/dev/null 2>&1; then
-      openclaw gateway start || true
+    if command -v "${BACKEND_BIN}" >/dev/null 2>&1; then
+      "${BACKEND_BIN}" gateway start || true
     fi
     start_dashboard
     ;;
   stop)
     stop_dashboard
-    if command -v openclaw >/dev/null 2>&1; then
-      openclaw gateway stop || true
+    if command -v "${BACKEND_BIN}" >/dev/null 2>&1; then
+      "${BACKEND_BIN}" gateway stop || true
     fi
     ;;
   restart)
@@ -56,10 +57,10 @@ case "$cmd" in
     "$0" start
     ;;
   status)
-    if command -v openclaw >/dev/null 2>&1; then
-      openclaw gateway status || true
+    if command -v "${BACKEND_BIN}" >/dev/null 2>&1; then
+      "${BACKEND_BIN}" gateway status || true
     else
-      echo "openclaw command not found"
+      echo "backend command not found: ${BACKEND_BIN}"
     fi
     if [[ -f "${DASHBOARD_PID}" ]] && kill -0 "$(cat "${DASHBOARD_PID}")" 2>/dev/null; then
       echo "dashboard: running (pid $(cat "${DASHBOARD_PID}"))"
@@ -78,15 +79,23 @@ case "$cmd" in
     fi
     ;;
   doctor)
-    if command -v openclaw >/dev/null 2>&1; then
-      openclaw doctor || true
+    if command -v "${BACKEND_BIN}" >/dev/null 2>&1; then
+      "${BACKEND_BIN}" doctor || true
     else
-      echo "openclaw command not found"
+      echo "backend command not found: ${BACKEND_BIN}"
     fi
     python3 "${WORKSPACE}/scripts/formal_fusion_version.py" status || true
     ;;
   run)
     python3 "${WORKSPACE}/scripts/formal_fusion_version.py" run "$@"
+    ;;
+  gateway|cron|agent|message|skills|models)
+    if command -v "${BACKEND_BIN}" >/dev/null 2>&1; then
+      "${BACKEND_BIN}" "$cmd" "$@"
+    else
+      echo "backend command not found: ${BACKEND_BIN}"
+      exit 1
+    fi
     ;;
   help|*)
     cat <<USAGE

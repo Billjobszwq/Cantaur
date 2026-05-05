@@ -11,13 +11,13 @@ import time
 from pathlib import Path
 from typing import Any
 
-ROOT = Path.home() / ".openclaw"
+ROOT = Path.home() / ".qyclaw"
 WORKSPACE_ROOT = ROOT / "workspace"
-RUNTIME_BASE = WORKSPACE_ROOT / "integration" / "claudecodex" / "runtime"
+RUNTIME_BASE = WORKSPACE_ROOT / "integration" / "qy_code" / "runtime"
 KNOWLEDGE_CONSUMER = WORKSPACE_ROOT / "scripts" / "main_knowledge_message_consumer.py"
 TASK_RESULT_BRIDGE = WORKSPACE_ROOT / "scripts" / "agent_task_result_bridge.py"
 RESULT_FEEDBACK_CONSUMER = WORKSPACE_ROOT / "scripts" / "main_result_feedback_consumer.py"
-PROTOCOL_VALIDATOR = WORKSPACE_ROOT / "integration" / "claudecodex" / "protocols" / "scripts" / "validate_openclaw_a2a.py"
+PROTOCOL_VALIDATOR = WORKSPACE_ROOT / "integration" / "qy_code" / "protocols" / "scripts" / "validate_qyclaw_a2a.py"
 SUBSCRIPTION_CONFIG = WORKSPACE_ROOT / "knowledge" / "schemas" / "agent-knowledge-subscriptions.v1.json"
 DEFAULT_TARGET_AGENTS = ["dev", "content", "ops", "law", "finance", "research"]
 
@@ -108,7 +108,7 @@ def run_cmd(cmd: list[str], env: dict[str, str] | None = None) -> dict[str, Any]
 def protocol_delta_audit(runtime_name: str, started_at: str) -> dict[str, Any]:
     rt_root = runtime_root(runtime_name)
     bus_db = rt_root / "bus.db"
-    validator = load_module(PROTOCOL_VALIDATOR, "validate_openclaw_a2a_for_p3")
+    validator = load_module(PROTOCOL_VALIDATOR, "validate_qyclaw_a2a_for_p3")
     invalid: list[dict[str, Any]] = []
     checked = 0
     started = time.time()
@@ -124,7 +124,7 @@ def protocol_delta_audit(runtime_name: str, started_at: str) -> dict[str, Any]:
         rows = conn.execute(query, (started_at,)).fetchall()
     for row in rows:
         payload = {
-            "protocol": "openclaw-a2a/v1",
+            "protocol": "qyclaw-a2a/v1",
             "message_type": row["message_type"],
             "message_id": row["message_id"],
             "task_id": row["task_id"],

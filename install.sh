@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-OPENCLAW_HOME="${OPENCLAW_HOME:-$HOME/.openclaw}"
+QYCLAW_HOME="${QYCLAW_HOME:-$HOME/.qyclaw}"
+BACKEND_BIN="${CANTAUR_BACKEND_BIN:-qyclaw-core}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-TARGET_WORKSPACE="${OPENCLAW_HOME}/workspace"
+TARGET_WORKSPACE="${QYCLAW_HOME}/workspace"
 
-mkdir -p "${OPENCLAW_HOME}" "${OPENCLAW_HOME}/logs" "${OPENCLAW_HOME}/state"
+mkdir -p "${QYCLAW_HOME}" "${QYCLAW_HOME}/logs" "${QYCLAW_HOME}/state"
 mkdir -p "${TARGET_WORKSPACE}"
 
 # Sync workspace files into runtime home
@@ -17,25 +18,25 @@ rsync -a --delete \
   --exclude 'tmp' \
   "${SCRIPT_DIR}/" "${TARGET_WORKSPACE}/"
 
-if [[ ! -f "${OPENCLAW_HOME}/.env" ]]; then
-  cp "${TARGET_WORKSPACE}/.env.example" "${OPENCLAW_HOME}/.env"
+if [[ ! -f "${QYCLAW_HOME}/.env" ]]; then
+  cp "${TARGET_WORKSPACE}/.env.example" "${QYCLAW_HOME}/.env"
 fi
 
-if [[ ! -f "${OPENCLAW_HOME}/openclaw.json" ]]; then
-  cp "${TARGET_WORKSPACE}/config/openclaw.example.json" "${OPENCLAW_HOME}/openclaw.json"
+if [[ ! -f "${QYCLAW_HOME}/qyclaw.json" ]]; then
+  cp "${TARGET_WORKSPACE}/config/qyclaw.example.json" "${QYCLAW_HOME}/qyclaw.json"
 fi
 
-if command -v openclaw >/dev/null 2>&1; then
-  openclaw gateway start || true
+if command -v "${BACKEND_BIN}" >/dev/null 2>&1; then
+  "${BACKEND_BIN}" gateway start || true
 fi
 
 "${TARGET_WORKSPACE}/bin/qyclaw" panel start || true
 
 cat <<DONE
 Install complete.
-OPENCLAW_HOME=${OPENCLAW_HOME}
+QYCLAW_HOME=${QYCLAW_HOME}
 Next steps:
-  1) edit ${OPENCLAW_HOME}/.env
-  2) edit ${OPENCLAW_HOME}/openclaw.json
+  1) edit ${QYCLAW_HOME}/.env
+  2) edit ${QYCLAW_HOME}/qyclaw.json
   3) ${TARGET_WORKSPACE}/bin/qyclaw doctor
 DONE

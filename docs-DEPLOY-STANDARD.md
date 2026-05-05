@@ -1,4 +1,4 @@
-# QYclaw 发行与部署标准（对齐 OpenClaw / Hermes 主流体验）
+# QYclaw 发行与部署标准（对齐 QYclaw / Unique 主流体验）
 
 - 版本：`v1.0`
 - 日期：`2026-05-04`
@@ -8,7 +8,7 @@
 
 ## 1. 目标体验（发布标准）
 
-参考主流 OpenClaw / Hermes 的使用体验，QYclaw 发布标准定义为：
+参考主流 QYclaw / Unique 的使用体验，QYclaw 发布标准定义为：
 
 1. 一行命令完成本地部署（安装依赖、初始化目录、生成配置模板、启动核心进程）。
 2. 启动后 5 分钟内完成核心配置（Agent、模型 API、Skill 路径）。
@@ -34,11 +34,11 @@ bash ./scripts/install_qyclaw_local.sh
 
 ## install.sh 必须完成的动作
 
-1. 环境检查：`python3`、`node`、`openclaw`、`sqlite3`。
+1. 环境检查：`python3`、`node`、`qyclaw`、`sqlite3`。
 2. 创建目录：`runtime`、`logs`、`config`、`workspace`（缺失时自动创建）。
 3. 生成模板配置：
    - `.env.example`
-   - `config/openclaw.example.json`
+   - `config/qyclaw.example.json`
    - `config/agents.example.yaml`
 4. 初始化默认 agent 清单：`main/dev/content/ops/law/finance/research`。
 5. 启动服务：gateway + lifecycle runner + dashboard。
@@ -121,7 +121,7 @@ qyclaw panel open
 
 ---
 
-## 6. 与 OpenClaw / Hermes 对齐点
+## 6. 与 QYclaw / Unique 对齐点
 
 1. 单命令可启动（降低部署门槛）。
 2. 配置声明式（模型、agent、skill 均模板化）。
@@ -181,7 +181,7 @@ qyclaw panel open
 
 1. `install.sh`（一行安装入口）
 2. `scripts/install_qyclaw_local.sh`（本地等价安装）
-3. `config/openclaw.example.json`
+3. `config/qyclaw.example.json`
 4. `.env.example`
 5. `docs/COMMANDS.md`（命令手册）
 6. `docs/DEPLOY.md`（部署手册）
@@ -194,7 +194,7 @@ qyclaw panel open
 
 ## M1（1 天）
 - 完成 install 脚本 + 配置模板 + CLI 包装命令。
-- 统一 `OPENCLAW_HOME`，移除绝对路径硬编码入口。
+- 统一 `QYCLAW_HOME`，移除绝对路径硬编码入口。
 
 ## M2（1-2 天）
 - 接入并固化 dashboard（服务化启动 + 指标统一）。

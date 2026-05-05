@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""OpenCLI invocation metrics for OpenClaw."""
+"""OpenCLI invocation metrics for QYclaw."""
 
 from __future__ import annotations
 
@@ -10,7 +10,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
-DEFAULT_LOG_PATH = Path(str(Path.home() / ".openclaw/logs/opencli-invocations.jsonl"))
+DEFAULT_LOG_PATH = Path(str(Path.home() / ".qyclaw/logs/opencli-invocations.jsonl"))
 
 
 def _parse_iso(value: str | None) -> datetime | None:

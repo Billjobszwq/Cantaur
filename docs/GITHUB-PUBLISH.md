@@ -1,6 +1,6 @@
 # GitHub 发布与安全检查
 
-本文件用于把当前 QYclaw（OpenClaw Mode）发布到 GitHub，并确保不上传私人信息。
+本文件用于把当前 Cantaur（QYclaw Mode）发布到 GitHub，并确保不上传私人信息。
 
 ## 发布前检查
 
@@ -32,13 +32,13 @@ gh auth status
 示例（公开仓库）：
 
 ```bash
-gh repo create qyclaw-openclaw-mode --public --source . --remote origin --push
+gh repo create qyclaw-qyclaw-mode --public --source . --remote origin --push
 ```
 
 示例（私有仓库）：
 
 ```bash
-gh repo create qyclaw-openclaw-mode --private --source . --remote origin --push
+gh repo create qyclaw-qyclaw-mode --private --source . --remote origin --push
 ```
 
 如果你已提前建好空仓库：
@@ -51,7 +51,7 @@ git push -u origin main
 ## 打标签（可选）
 
 ```bash
-git tag -a v1.0.0 -m "QYclaw OpenClaw-mode v1.0.0"
+git tag -a v1.0.0 -m "Cantaur v1.0.0"
 git push origin v1.0.0
 ```
 
@@ -59,16 +59,16 @@ git push origin v1.0.0
 
 ```bash
 git clone <YOUR_REPO_URL>
-cd qyclaw-openclaw-mode
-OPENCLAW_HOME=$HOME/.openclaw bash ./install.sh
+cd qyclaw-qyclaw-mode
+QYCLAW_HOME=$HOME/.qyclaw bash ./install.sh
 ```
 
 启动与检查：
 
 ```bash
-$HOME/.openclaw/workspace/bin/qyclaw start
-$HOME/.openclaw/workspace/bin/qyclaw doctor
-$HOME/.openclaw/workspace/bin/qyclaw panel
+$HOME/.qyclaw/workspace/bin/qyclaw start
+$HOME/.qyclaw/workspace/bin/qyclaw doctor
+$HOME/.qyclaw/workspace/bin/qyclaw panel
 ```
 
 ## 安全发布建议

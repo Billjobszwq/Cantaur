@@ -12,7 +12,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-GUARD_PATH = Path(str(Path.home() / ".openclaw/workspace/scripts/opencli_guard.py"))
+GUARD_PATH = Path(str(Path.home() / ".qyclaw/workspace/scripts/opencli_guard.py"))
 
 SITE_ALIASES: dict[str, list[str]] = {
     "twitter": ["x", "twitter", "推特", "推文"],

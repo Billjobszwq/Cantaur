@@ -1,0 +1,91 @@
+{
+  "version": "unique-fusion-rollout/v1",
+  "updated_at": "2026-05-03T20:55:00+08:00",
+  "active_tier": "low",
+  "tiers": {
+    "off": {
+      "enabled": false
+    },
+    "low": {
+      "enabled": true,
+      "knowledge": {
+        "allowed_candidate_types": [
+          "fact",
+          "lesson",
+          "preference"
+        ],
+        "max_items_per_run": 3,
+        "decision": "observe"
+      },
+      "memory": {
+        "allowed_candidate_types": [
+          "lesson",
+          "preference",
+          "procedure"
+        ],
+        "min_confidence": 0.85,
+        "min_priority": 4,
+        "max_items_per_agent": 2,
+        "max_items_total": 6,
+        "status": "approved"
+      }
+    },
+    "medium": {
+      "enabled": true,
+      "knowledge": {
+        "allowed_candidate_types": [
+          "fact",
+          "lesson",
+          "preference",
+          "rule"
+        ],
+        "max_items_per_run": 6,
+        "decision": "observe"
+      },
+      "memory": {
+        "allowed_candidate_types": [
+          "decision",
+          "lesson",
+          "preference",
+          "procedure",
+          "rule",
+          "fact"
+        ],
+        "min_confidence": 0.82,
+        "min_priority": 3,
+        "max_items_per_agent": 3,
+        "max_items_total": 12,
+        "status": "approved"
+      }
+    },
+    "high": {
+      "enabled": true,
+      "knowledge": {
+        "allowed_candidate_types": [
+          "decision",
+          "rule",
+          "fact",
+          "lesson",
+          "preference"
+        ],
+        "max_items_per_run": 8,
+        "decision": "observe"
+      },
+      "memory": {
+        "allowed_candidate_types": [
+          "decision",
+          "lesson",
+          "preference",
+          "procedure",
+          "rule",
+          "fact"
+        ],
+        "min_confidence": 0.78,
+        "min_priority": 3,
+        "max_items_per_agent": 5,
+        "max_items_total": 20,
+        "status": "approved"
+      }
+    }
+  }
+}

@@ -86,7 +86,7 @@
     <div class="card"><h3>⚠️ 告警</h3><div class="alert-list" id="alert-list"></div></div>
     <div class="card"><h3>⚡ Token</h3><div id="token-section"></div></div>
     <div class="card full-width"><h3>⏱️ 定时任务</h3><div class="cron-list" id="cron-list"></div></div>
-    <div class="card full-width" id="doctor-card" style="display:none"><h3>🩺 OpenClaw Doctor <span id="doctor-status"></span></h3><div id="doctor-content"></div></div>
+    <div class="card full-width" id="doctor-card" style="display:none"><h3>🩺 QYclaw Doctor <span id="doctor-status"></span></h3><div id="doctor-content"></div></div>
   </div>
   <div class="footer">小云 ☁️ · 快照: <span id="snap">--</span> · 自动刷新: 30秒</div>
 </div>
@@ -112,7 +112,7 @@ async function fetchData() {
 }
 
 function populateUI() {
-  document.getElementById('ver').textContent = 'OpenClaw ' + (D.version||'?');
+  document.getElementById('ver').textContent = 'QYclaw ' + (D.version||'?');
   document.getElementById('snap').textContent = D.timestamp || '--';
   
   const dot = document.getElementById('live-dot');
@@ -170,7 +170,7 @@ window.refreshData = async () => { await fetchData(); toast('已刷新', true); 
 
 // Restart gateway
 window.restartGateway = function() {
-  if (!confirm('确认重启 OpenClaw Gateway？')) return;
+  if (!confirm('确认重启 QYclaw Gateway？')) return;
   const btn = document.querySelector('.btn-red');
   btn.textContent = '⏳ 重启中...'; btn.disabled = true;
   fetch(API + '/restart').then(r=>r.json()).then(d=>{

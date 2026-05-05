@@ -9,7 +9,7 @@ tmp/
 # Local env
 .env
 .env.*
-openclaw.json
+qyclaw.json
 *.pid
 
 # Build/cache

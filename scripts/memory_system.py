@@ -11,9 +11,9 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, Iterable, List, Optional, Tuple
 
-ROOT = Path.home() / ".openclaw"
+ROOT = Path.home() / ".qyclaw"
 WORKSPACE_ROOT = ROOT / "workspace"
-OPENCLAW_CONFIG = ROOT / "openclaw.json"
+QYCLAW_CONFIG = ROOT / "qyclaw.json"
 SYSTEM_DIR = WORKSPACE_ROOT / "memory-system"
 REGISTRY_PATH = SYSTEM_DIR / "agents.json"
 ROUTER_RULES_PATH = SYSTEM_DIR / "router-rules.json"
@@ -53,7 +53,7 @@ def running_under_cron(max_depth: int = 6) -> bool:
 def should_skip_legacy_cron(args: argparse.Namespace) -> bool:
     if args.cmd != "maintain":
         return False
-    if os.environ.get("OPENCLAW_ENABLE_LEGACY_CRON") == "1":
+    if os.environ.get("QYCLAW_ENABLE_LEGACY_CRON") == "1":
         return False
     if args.force:
         return False
@@ -106,7 +106,7 @@ def ensure_file(path: Path, content: str) -> None:
         path.write_text(content, encoding="utf-8")
 
 
-def discover_agents(config_path: Path = OPENCLAW_CONFIG) -> List[Agent]:
+def discover_agents(config_path: Path = QYCLAW_CONFIG) -> List[Agent]:
     cfg = read_json(config_path)
     agents: List[Agent] = []
     for item in cfg.get("agents", {}).get("list", []):
@@ -513,7 +513,7 @@ def recommend_agents(agents: List[Agent], query: str) -> List[Tuple[float, Agent
 def cmd_init(_: argparse.Namespace) -> None:
     agents = discover_agents()
     if not agents:
-        raise SystemExit("No agents found from openclaw.json")
+        raise SystemExit("No agents found from qyclaw.json")
     write_registry(agents)
     ensure_router_rules(agents)
     init_memory_layers(agents)
@@ -580,7 +580,7 @@ def cmd_recommend(args: argparse.Namespace) -> None:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    p = argparse.ArgumentParser(description="Layered memory + recommendation system for OpenClaw multi-agent")
+    p = argparse.ArgumentParser(description="Layered memory + recommendation system for QYclaw multi-agent")
     sub = p.add_subparsers(dest="cmd", required=True)
 
     p_init = sub.add_parser("init", help="initialize layered memory structure for all agents")

@@ -5,6 +5,7 @@ from pathlib import Path
 from datetime import datetime, timezone, timedelta
 
 CST = timezone(timedelta(hours=8))
+BACKEND_BIN = os.environ.get("CANTAUR_BACKEND_BIN", "qyclaw-core")
 
 def run(cmd, timeout=10):
     try:
@@ -14,7 +15,7 @@ def run(cmd, timeout=10):
         return ""
 
 def get_gateway_status():
-    out = run("openclaw gateway status 2>&1 | grep -E 'Runtime:|RPC probe:|port=|PID'", 10)
+    out = run(f"{BACKEND_BIN} gateway status 2>&1 | grep -E 'Runtime:|RPC probe:|port=|PID'", 10)
     running = "active" in out.lower() or "running" in out.lower()
     pid = ""
     for line in out.split('\n'):
@@ -28,7 +29,7 @@ def get_gateway_status():
     }
 
 def get_cron_jobs():
-    out = run("openclaw cron list 2>&1 | tail -n +2", 10)
+    out = run(f"{BACKEND_BIN} cron list 2>&1 | tail -n +2", 10)
     jobs = []
     for line in out.split('\n'):
         if not line.strip() or 'ID' in line:
@@ -45,9 +46,9 @@ def get_cron_jobs():
 
 def get_launchd_jobs():
     jobs = []
-    plists = (Path.home() / "Library" / "LaunchAgents").glob("ai.openclaw.*.plist")
+    plists = (Path.home() / "Library" / "LaunchAgents").glob("ai.qyclaw.*.plist")
     for p in plists:
-        name = p.stem.replace("ai.openclaw.", "")
+        name = p.stem.replace("ai.qyclaw.", "")
         out = run(f"launchctl list | grep {name}", 5)
         status = "active" if out else "idle"
         jobs.append({"name": name, "status": status})
@@ -55,7 +56,7 @@ def get_launchd_jobs():
 
 def get_memory_stats():
     """Get memory system stats"""
-    workspace = Path(str(Path.home() / ".openclaw/workspace"))
+    workspace = Path(str(Path.home() / ".qyclaw/workspace"))
     today = datetime.now(CST).strftime("%Y-%m-%d")
     
     # Count daily files
@@ -71,7 +72,7 @@ def get_memory_stats():
     knowledge_count = len(list(knowledge_dir.rglob("*.md"))) if knowledge_dir.exists() else 0
     
     # Session count
-    sessions_dir = Path(str(Path.home() / ".openclaw/agents/main/sessions"))
+    sessions_dir = Path(str(Path.home() / ".qyclaw/agents/main/sessions"))
     session_files = list(sessions_dir.glob("*.json")) if sessions_dir.exists() else []
     
     return {
@@ -85,16 +86,16 @@ def get_memory_stats():
 
 def get_skills_count():
     skill_dirs = [
-        Path(str(Path.home() / ".openclaw/workspace/skills")),
-        Path(str(Path.home() / ".openclaw/workspace/.agents/skills")),
-        Path.home() / ".nvm" / "versions" / "node" / "v24.4.0" / "lib" / "node_modules" / "openclaw" / "skills",
+        Path(str(Path.home() / ".qyclaw/workspace/skills")),
+        Path(str(Path.home() / ".qyclaw/workspace/.agents/skills")),
+        Path.home() / ".nvm" / "versions" / "node" / "v24.4.0" / "lib" / "node_modules" / "qyclaw" / "skills",
     ]
     custom = 0
     builtin = 0
     for sd in skill_dirs:
         if not sd.exists():
             continue
-        if "openclaw/skills" in str(sd):
+        if "qyclaw/skills" in str(sd):
             builtin = len([d for d in sd.iterdir() if d.is_dir()])
         else:
             custom += len([d for d in sd.iterdir() if d.is_dir()])
@@ -114,20 +115,20 @@ def get_system_alerts():
     alerts = []
     
     # Check config
-    config = Path(str(Path.home() / ".openclaw/openclaw.json"))
+    config = Path(str(Path.home() / ".qyclaw/qyclaw.json"))
     if config.exists():
         content = config.read_text()
         if "thinkingDefault" in content or "reasoningDefault" in content:
             alerts.append({
                 "level": "warn",
                 "msg": "Config 中存在无效 key (thinkingDefault/reasoningDefault)",
-                "fix": "openclaw doctor --fix"
+                "fix": "qyclaw doctor --fix"
             })
     
     # Check gateway
     gw = get_gateway_status()
     if not gw["running"]:
-        alerts.append({"level": "error", "msg": "Gateway 未运行", "fix": "openclaw gateway start"})
+        alerts.append({"level": "error", "msg": "Gateway 未运行", "fix": "qyclaw gateway start"})
     elif "failed" in gw.get("raw", "").lower():
         alerts.append({"level": "warn", "msg": "Gateway RPC 探针失败（loopback 模式正常现象）"})
     
@@ -151,7 +152,7 @@ def get_agents_status():
     ]
     
     for a in agents:
-        sessions_dir = Path(fstr(Path.home() / ".openclaw/agents/{a['id']}/sessions"))
+        sessions_dir = Path(str(Path.home() / f".qyclaw/agents/{a['id']}/sessions"))
         if sessions_dir.exists():
             sessions = list(sessions_dir.glob("*.json"))
             a["sessions_count"] = len(sessions)

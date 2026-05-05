@@ -9,10 +9,10 @@ import sqlite3
 from pathlib import Path
 from typing import Any
 
-ROOT = Path.home() / ".openclaw"
+ROOT = Path.home() / ".qyclaw"
 WORKSPACE_ROOT = ROOT / "workspace"
-RUNTIME_BASE = WORKSPACE_ROOT / "integration" / "claudecodex" / "runtime"
-BUS_SCRIPT = WORKSPACE_ROOT / "integration" / "claudecodex" / "bus" / "scripts" / "bus_cli.py"
+RUNTIME_BASE = WORKSPACE_ROOT / "integration" / "qy_code" / "runtime"
+BUS_SCRIPT = WORKSPACE_ROOT / "integration" / "qy_code" / "bus" / "scripts" / "bus_cli.py"
 SUBSCRIPTION_CONFIG = WORKSPACE_ROOT / "knowledge" / "schemas" / "agent-knowledge-subscriptions.v1.json"
 TASK_TEMPLATE_CONFIG = WORKSPACE_ROOT / "knowledge" / "schemas" / "agent-task-templates.v1.json"
 CONVERGENCE_POLICY_CONFIG = WORKSPACE_ROOT / "knowledge" / "schemas" / "knowledge-convergence-policy.v1.json"
@@ -259,7 +259,7 @@ def build_next_actions(messages: list[dict[str, Any]]) -> list[dict[str, Any]]:
             candidate_type = str(body.get("candidate_type", "") or "")
             action_type = "review_candidate"
             reason = "新知识候选已进入 review queue，建议尽快给出 adopt / observe / reject。"
-            recommended_command = f"python3 ${OPENCLAW_HOME}/workspace/scripts/knowledge_base.py review-decide --month {dt.date.today().strftime('%Y-%m')} --id <RQ-ID> --decision observe --reviewer main --note \"补充判断\""
+            recommended_command = f"python3 ${QYCLAW_HOME}/workspace/scripts/knowledge_base.py review-decide --month {dt.date.today().strftime('%Y-%m')} --id <RQ-ID> --decision observe --reviewer main --note \"补充判断\""
             if candidate_type == "decision":
                 action_type = "review_decision_candidate"
                 reason = "该候选更像执行/收口决策，建议由 main 与 ops 先做落地判断，再决定是否固化。"
@@ -477,7 +477,7 @@ def emit_action_messages(conn: sqlite3.Connection, bus, bus_runtime: Path, diges
         targets = action.get("target_agents", [])
         for target in targets:
             payload = {
-                "protocol": "openclaw-a2a/v1",
+                "protocol": "qyclaw-a2a/v1",
                 "message_type": "KNOWLEDGE_ACTION_SUGGESTED",
                 "message_id": f"{digest['task_id']}-knowledge-action-{index:03d}-to-{target}",
                 "task_id": digest["task_id"],
@@ -730,7 +730,7 @@ def build_task_from_action_message(message: dict[str, Any], to_agent: str, gener
         inputs.extend([f"source_message_id={item}" for item in source_message_ids])
     required_output = list(template["required_output"])
     payload = {
-        "protocol": "openclaw-a2a/v1",
+        "protocol": "qyclaw-a2a/v1",
         "message_type": "TASK",
         "message_id": message_id,
         "task_id": task_id,

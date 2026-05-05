@@ -1,4 +1,7 @@
 {
+  "name": "cantaur",
+  "version": "1.0.0",
+  "private": false,
   "dependencies": {
     "playwright": "^1.58.2"
   }

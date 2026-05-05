@@ -9,10 +9,10 @@ import sqlite3
 from pathlib import Path
 from typing import Any
 
-ROOT = Path.home() / ".openclaw"
+ROOT = Path.home() / ".qyclaw"
 WORKSPACE_ROOT = ROOT / "workspace"
-RUNTIME_BASE = WORKSPACE_ROOT / "integration" / "claudecodex" / "runtime"
-BUS_SCRIPT = WORKSPACE_ROOT / "integration" / "claudecodex" / "bus" / "scripts" / "bus_cli.py"
+RUNTIME_BASE = WORKSPACE_ROOT / "integration" / "qy_code" / "runtime"
+BUS_SCRIPT = WORKSPACE_ROOT / "integration" / "qy_code" / "bus" / "scripts" / "bus_cli.py"
 KNOWLEDGE_BASE_SCRIPT = WORKSPACE_ROOT / "scripts" / "knowledge_base.py"
 CONVERGENCE_POLICY_CONFIG = WORKSPACE_ROOT / "knowledge" / "schemas" / "knowledge-convergence-policy.v1.json"
 
@@ -345,7 +345,7 @@ def emit_result_feedback_candidate_events(knowledge_base, conn: sqlite3.Connecti
         normalized_type = knowledge_base.normalized_candidate_type(raw_type)
         review_queue_ref = knowledge_base.review_queue_output_path(str(message["task_id"]), idx, str(candidate.get("title", f"{message['task_id']} result candidate {idx}")))
         payload = {
-            "protocol": "openclaw-a2a/v1",
+            "protocol": "qyclaw-a2a/v1",
             "message_type": "KNOWLEDGE_CANDIDATE_CREATED",
             "message_id": f"{message['task_id']}-{knowledge_base.safe_slug(message['from_agent'], 16)}-result-feedback-candidate-{idx:03d}",
             "task_id": str(message["task_id"]),
@@ -389,7 +389,7 @@ def refresh_review_report(knowledge_base, limit: int = 50) -> Path:
 def emit_feedback_knowledge_page(knowledge_base, conn: sqlite3.Connection, bus, bus_runtime: Path, message: dict[str, Any], page_path: Path, generated_at: str) -> list[str]:
     title = f"ingested task result feedback from {message['from_agent']}"
     payload = {
-        "protocol": "openclaw-a2a/v1",
+        "protocol": "qyclaw-a2a/v1",
         "message_type": "KNOWLEDGE_PAGE_UPDATED",
         "message_id": f"{message['task_id']}-{knowledge_base.safe_slug(message['from_agent'], 16)}-result-feedback-page-updated",
         "task_id": str(message["task_id"]),

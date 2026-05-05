@@ -7,12 +7,12 @@ import subprocess
 from pathlib import Path
 
 
-OPENCLAW_ROOT = Path.home() / ".openclaw"
-LIVE_LINK_ROOT = OPENCLAW_ROOT / "workspace" / "integration" / "claudecodex" / "live-link"
+QYCLAW_ROOT = Path.home() / ".qyclaw"
+LIVE_LINK_ROOT = QYCLAW_ROOT / "workspace" / "integration" / "qy_code" / "live-link"
 RC_ENTRY = LIVE_LINK_ROOT / "scripts" / "formal_fusion_live_entry.py"
 LIMITED_LIVE_ENTRY = LIVE_LINK_ROOT / "scripts" / "real_version_limited_live_entry.py"
 LIFECYCLE_ENTRY = LIVE_LINK_ROOT / "scripts" / "main_bridge_lifecycle.py"
-HERMES_FUSION_ENTRY = OPENCLAW_ROOT / "workspace" / "scripts" / "hermes_fusion_orchestrator.py"
+HERMES_FUSION_ENTRY = QYCLAW_ROOT / "workspace" / "scripts" / "unique_fusion_orchestrator.py"
 
 
 def run_json(cmd: list[str]) -> dict:
@@ -39,7 +39,7 @@ def run_json(cmd: list[str]) -> dict:
         return last_obj
 
 
-def run_hermes_sync(
+def run_unique_sync(
     *,
     runtime: str,
     knowledge_limit: int,
@@ -161,19 +161,19 @@ def cmd_run(args: argparse.Namespace) -> int:
             run_cmd.append("--skip-memory-refresh")
         execution = run_json(run_cmd)
 
-    hermes_sync = {
-        "enabled": bool(args.sync_hermes),
+    unique_sync = {
+        "enabled": bool(args.sync_unique),
         "status": "skipped",
         "reason": "disabled_by_flag",
     }
-    if args.sync_hermes:
-        hermes_sync = run_hermes_sync(
+    if args.sync_unique:
+        unique_sync = run_unique_sync(
             runtime="live",
-            knowledge_limit=args.hermes_knowledge_limit,
-            review_limit=args.hermes_review_limit,
-            with_timeout_scan=args.hermes_timeout_scan,
-            apply_auto=args.hermes_apply_auto,
-            autopilot_tier=args.hermes_autopilot_tier,
+            knowledge_limit=args.unique_knowledge_limit,
+            review_limit=args.unique_review_limit,
+            with_timeout_scan=args.unique_timeout_scan,
+            apply_auto=args.unique_apply_auto,
+            autopilot_tier=args.unique_autopilot_tier,
         )
 
     result = {
@@ -184,7 +184,7 @@ def cmd_run(args: argparse.Namespace) -> int:
         "workflow_summary_json": trigger.get("gate_result", {}).get("workflow_summary_json"),
         "workflow_summary_md": trigger.get("gate_result", {}).get("workflow_summary_md"),
         "lifecycle_execution": execution,
-        "hermes_fusion": hermes_sync,
+        "unique_fusion": unique_sync,
     }
     result["workspace_entry"] = str(Path(__file__))
     result["mode"] = "formal_fusion_version_run"
@@ -236,7 +236,7 @@ def cmd_smoke(actor: str) -> int:
             task_id,
         ]
         execution = run_json(run_cmd)
-    hermes_sync = run_hermes_sync(
+    unique_sync = run_unique_sync(
         runtime="live",
         knowledge_limit=80,
         review_limit=10000,
@@ -252,7 +252,7 @@ def cmd_smoke(actor: str) -> int:
         "workflow_summary_json": trigger.get("gate_result", {}).get("workflow_summary_json"),
         "workflow_summary_md": trigger.get("gate_result", {}).get("workflow_summary_md"),
         "lifecycle_execution": execution,
-        "hermes_fusion": hermes_sync,
+        "unique_fusion": unique_sync,
     }
     result["workspace_entry"] = str(Path(__file__))
     result["mode"] = "formal_fusion_version_smoke"
@@ -361,12 +361,12 @@ def build_parser() -> argparse.ArgumentParser:
     p_run.add_argument("--max-tasks", type=int, default=20)
     p_run.add_argument("--lock-ttl-seconds", type=int, default=900)
     p_run.add_argument("--skip-memory-refresh", action="store_true")
-    p_run.add_argument("--sync-hermes", action=argparse.BooleanOptionalAction, default=True)
-    p_run.add_argument("--hermes-knowledge-limit", type=int, default=80)
-    p_run.add_argument("--hermes-review-limit", type=int, default=10000)
-    p_run.add_argument("--hermes-timeout-scan", action="store_true")
-    p_run.add_argument("--hermes-apply-auto", action="store_true")
-    p_run.add_argument("--hermes-autopilot-tier", default="low", choices=["off", "low", "medium", "high"])
+    p_run.add_argument("--sync-unique", action=argparse.BooleanOptionalAction, default=True)
+    p_run.add_argument("--unique-knowledge-limit", type=int, default=80)
+    p_run.add_argument("--unique-review-limit", type=int, default=10000)
+    p_run.add_argument("--unique-timeout-scan", action="store_true")
+    p_run.add_argument("--unique-apply-auto", action="store_true")
+    p_run.add_argument("--unique-autopilot-tier", default="low", choices=["off", "low", "medium", "high"])
 
     p_smoke = sub.add_parser("smoke")
     p_smoke.add_argument("--actor", default="main")

@@ -13,8 +13,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, Iterable, List, Optional, Tuple
 
-ROOT = Path.home() / ".openclaw"
-OPENCLAW_CONFIG = ROOT / "openclaw.json"
+ROOT = Path.home() / ".qyclaw"
+QYCLAW_CONFIG = ROOT / "qyclaw.json"
 OBSIDIAN_AGENT_DIR = Path.home() / "Documents" / "Obsidian Vault" / "Agent专用"
 
 TEXT_SPLIT_RE = re.compile(r"[\n\r]+")
@@ -101,7 +101,7 @@ def running_under_cron(max_depth: int = 6) -> bool:
 def should_skip_legacy_cron(args: argparse.Namespace) -> bool:
     if args.cmd not in {"capture", "extract"}:
         return False
-    if os.environ.get("OPENCLAW_ENABLE_LEGACY_CRON") == "1":
+    if os.environ.get("QYCLAW_ENABLE_LEGACY_CRON") == "1":
         return False
     return running_under_cron()
 
@@ -203,7 +203,7 @@ def ensure_file(path: Path, content: str) -> None:
 
 
 def discover_agents() -> List[Agent]:
-    cfg = read_json(OPENCLAW_CONFIG)
+    cfg = read_json(QYCLAW_CONFIG)
     out: List[Agent] = []
     for item in cfg.get("agents", {}).get("list", []):
         agent_id = str(item.get("id", "")).strip()
@@ -2654,7 +2654,7 @@ def cmd_search_structured(args: argparse.Namespace) -> None:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Three-layer memory pipeline for isolated OpenClaw workspaces")
+    parser = argparse.ArgumentParser(description="Three-layer memory pipeline for isolated QYclaw workspaces")
     sub = parser.add_subparsers(dest="cmd", required=True)
 
     p_init = sub.add_parser("init", help="initialize working / semantic / structured memory layout")

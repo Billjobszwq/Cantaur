@@ -9,10 +9,10 @@ import sqlite3
 from pathlib import Path
 from typing import Any
 
-ROOT = Path.home() / ".openclaw"
+ROOT = Path.home() / ".qyclaw"
 WORKSPACE_ROOT = ROOT / "workspace"
-RUNTIME_BASE = WORKSPACE_ROOT / "integration" / "claudecodex" / "runtime"
-BUS_SCRIPT = WORKSPACE_ROOT / "integration" / "claudecodex" / "bus" / "scripts" / "bus_cli.py"
+RUNTIME_BASE = WORKSPACE_ROOT / "integration" / "qy_code" / "runtime"
+BUS_SCRIPT = WORKSPACE_ROOT / "integration" / "qy_code" / "bus" / "scripts" / "bus_cli.py"
 RESULT_TEMPLATE_CONFIG = WORKSPACE_ROOT / "knowledge" / "schemas" / "agent-result-templates.v1.json"
 
 
@@ -326,7 +326,7 @@ def build_result_payload(message: dict[str, Any], to_agent: str, generated_at: s
         "sections": sections,
     }
     return {
-        "protocol": "openclaw-a2a/v1",
+        "protocol": "qyclaw-a2a/v1",
         "message_type": "RESULT",
         "message_id": f"{message['message_id']}-result",
         "task_id": str(message["task_id"]),

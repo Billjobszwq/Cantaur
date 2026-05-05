@@ -1,0 +1,39 @@
+{
+  "profile_id": "real-version-limited-live-v1",
+  "profile_label": "Real Version Controlled Limited Live",
+  "runtime": "shadow-live",
+  "default_surface": {
+    "main_entry_doc": "${QYCLAW_HOME}/workspace/integration/qy_code/live-link/PHASE32-MAIN-DAILY-FUSION-COORDINATION-KERNEL.md",
+    "loop_doc": "${QYCLAW_HOME}/workspace/integration/qy_code/live-link/PHASE32-EMBEDDED-FUSION-COORDINATION-KERNEL-LOOP.md",
+    "stable_signals_doc": "${QYCLAW_HOME}/workspace/integration/qy_code/live-link/PHASE32-STABLE-COORDINATION-KERNEL-SIGNALS.md"
+  },
+  "governance": {
+    "window_doc": "${QYCLAW_HOME}/workspace/integration/qy_code/live-link/REAL-VERSION-LIMITED-LIVE-WINDOW.md",
+    "checklist_doc": "${QYCLAW_HOME}/workspace/integration/qy_code/live-link/REAL-VERSION-LIMITED-LIVE-WINDOW-01-OPERATOR-CHECKLIST.md",
+    "log_sheet_doc": "${QYCLAW_HOME}/workspace/integration/qy_code/live-link/REAL-VERSION-LIMITED-LIVE-WINDOW-01-LOG-SHEET.md",
+    "execution_result_doc": "${QYCLAW_HOME}/workspace/integration/qy_code/live-link/REAL-VERSION-LIMITED-LIVE-EXECUTION-RESULT-01.md",
+    "decision_doc": "${QYCLAW_HOME}/workspace/integration/qy_code/live-link/REAL-VERSION-GO-LIVE-DECISION-UPDATE-01.md"
+  },
+  "gate_profile": {
+    "enabled": true,
+    "workflow_mode": "assist",
+    "execution_mode": "start-only",
+    "require_classifier_allow_bridge": true,
+    "allowed_task_types": [
+      "report.cross_functional"
+    ],
+    "allowed_source_channels": [
+      "manual",
+      "main-workflow",
+      "main-explicit-bridge"
+    ]
+  },
+  "boundaries": [
+    "只服务 report.cross_functional",
+    "不自动接管最终回复",
+    "不自动外发",
+    "不自动执行高风险动作",
+    "不默认切换主链",
+    "不自动切换阶段"
+  ]
+}
