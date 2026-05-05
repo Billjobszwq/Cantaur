@@ -42,3 +42,7 @@ $HOME/.openclaw/workspace/bin/qyclaw doctor
 - No private credentials are included.
 - Runtime data/logs are excluded by `.gitignore`.
 - All hardcoded user absolute paths were removed from code.
+
+## Publishing
+
+- GitHub publishing and privacy checklist: `docs/GITHUB-PUBLISH.md`
