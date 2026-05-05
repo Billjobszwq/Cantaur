@@ -2,51 +2,81 @@
 
 本项目基于openclaw魔改。
 
-## 功能概览
+## 先决环境
 
-- 支持多 Agent 生命周期主链：`trigger/run/retry/terminate/timeout-scan`。
-- 支持 A2A 协议总线：任务与结果采用结构化消息协作，具备审计与重试能力。
-- 支持记忆与知识闭环：结果回流、候选评审与蒸馏收敛。
-- 提供维护与门禁链路：P1/P3/P4 自动巡检、放行与回退控制。
-- 提供本地控制面板与统一命令入口：状态查看、诊断与任务触发。
+需要先安装：
 
+- `bash` 4.0+
+- `git`
+- `curl`
+- `rsync`
+- `python3` 3.10+
+- `node` 20+
+- `sqlite3`
 
-QYclaw-style packaged release for local deployment with:
-- one-command install
-- lifecycle orchestration scripts
-- local dashboard
-- agent/model/skill configuration templates
+## 适配系统与依赖安装命令
 
-## One-line local deploy
+### macOS (Homebrew)
 
 ```bash
+brew update
+brew install git curl rsync python node sqlite
+```
+
+### Ubuntu / Debian
+
+```bash
+sudo apt update
+sudo apt install -y git curl rsync python3 python3-venv python3-pip nodejs npm sqlite3
+```
+
+### RHEL / Rocky Linux
+
+```bash
+sudo dnf update -y
+sudo dnf install -y git curl rsync python3 python3-pip nodejs npm sqlite
+```
+
+### Windows 11 (WSL2 + Ubuntu)
+
+```bash
+wsl --install -d Ubuntu-24.04
+```
+
+进入 WSL 后，执行 Ubuntu / Debian 依赖安装命令。
+
+## 一键部署
+
+```bash
+git clone https://github.com/Billjobszwq/Cantaur.git
+cd Cantaur
 QYCLAW_HOME=$HOME/.qyclaw bash ./install.sh
 ```
 
-## Start / status
+## 启动与验证
 
 ```bash
 $HOME/.qyclaw/workspace/bin/qyclaw start
 $HOME/.qyclaw/workspace/bin/qyclaw status
+$HOME/.qyclaw/workspace/bin/qyclaw doctor
 $HOME/.qyclaw/workspace/bin/qyclaw panel
 ```
 
-## Run a fusion task
+## 首次配置
+
+1. 编辑 `$HOME/.qyclaw/.env`
+2. 编辑 `$HOME/.qyclaw/qyclaw.json`
+3. 放置 skills 到 `$HOME/.qyclaw/workspace/skills/`
+
+## 任务触发示例
 
 ```bash
 $HOME/.qyclaw/workspace/bin/qyclaw run --title "Cross-functional report" --goal "Generate a full report"
 ```
 
-## Configure API/Model/Agents/Skills
+## 详细部署文档
 
-1. Edit `$HOME/.qyclaw/.env`
-2. Edit `$HOME/.qyclaw/qyclaw.json`
-3. Place skills under `$HOME/.qyclaw/workspace/skills/`
-4. Verify with:
-
-```bash
-$HOME/.qyclaw/workspace/bin/qyclaw doctor
-```
+- `docs/DEPLOY.md`
 
 ## 发布说明
 
