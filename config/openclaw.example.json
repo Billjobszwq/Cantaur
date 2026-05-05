@@ -1,0 +1,36 @@
+{
+  "models": {
+    "providers": {
+      "deepseek": {
+        "baseUrl": "${QYCLAW_BASE_URL}",
+        "apiKey": "${QYCLAW_API_KEY}",
+        "models": [
+          "${QYCLAW_PRIMARY_MODEL}",
+          "${QYCLAW_FALLBACK_MODEL_1}",
+          "${QYCLAW_FALLBACK_MODEL_2}"
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "provider": "${QYCLAW_PROVIDER}",
+        "primary": "${QYCLAW_PRIMARY_MODEL}",
+        "fallbacks": [
+          "${QYCLAW_FALLBACK_MODEL_1}",
+          "${QYCLAW_FALLBACK_MODEL_2}"
+        ]
+      }
+    },
+    "list": [
+      "main",
+      "dev",
+      "content",
+      "ops",
+      "law",
+      "finance",
+      "research"
+    ]
+  }
+}

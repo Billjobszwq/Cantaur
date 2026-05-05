@@ -1,0 +1,21 @@
+{
+  "protocol": "openclaw-a2a/v1",
+  "message_type": "ESCALATE",
+  "message_id": "msg-20260403-006",
+  "task_id": "task-20260403-001",
+  "trace_id": "trace-20260403-001",
+  "parent_task_id": null,
+  "from": "research",
+  "to": "main",
+  "created_at": "2026-04-03T16:40:00+08:00",
+  "body": {
+    "reason": "evidence_insufficient",
+    "summary": "当前结论证据不足，建议缩小范围或补资料",
+    "options": [
+      "继续补资料",
+      "缩小研究范围",
+      "先输出底稿"
+    ],
+    "escalate_to": "main"
+  }
+}

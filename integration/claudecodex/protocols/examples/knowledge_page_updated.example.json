@@ -1,0 +1,24 @@
+{
+  "protocol": "openclaw-a2a/v1",
+  "message_type": "KNOWLEDGE_PAGE_UPDATED",
+  "message_id": "msg-20260410-kp-001",
+  "task_id": "task-20260410-knowledge-001",
+  "trace_id": "trace-20260410-knowledge-001",
+  "parent_task_id": null,
+  "from": "knowledge-compiler",
+  "to": "main",
+  "created_at": "2026-04-10T03:31:00+08:00",
+  "body": {
+    "page_type": "project",
+    "page_path": "${OPENCLAW_HOME}/workspace/knowledge/projects/openclaw-knowledge-system-v2.md",
+    "operation": "update",
+    "summary": "已把最新 memory-fusion 产物写入项目知识页。",
+    "source_refs": [
+      "${OPENCLAW_HOME}/workspace/integration/claudecodex/runtime/shadow-live/memory-fusion/task-20260410-031246-知识系统v2接链验证"
+    ],
+    "related_pages": [
+      "${OPENCLAW_HOME}/workspace/knowledge/sources/2026-04/task-20260410-031246-知识系统v2接链验证-fusion.md"
+    ],
+    "compiler": "knowledge_base.py"
+  }
+}

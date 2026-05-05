@@ -1,0 +1,98 @@
+{
+  "version": "agent-result-templates/v1",
+  "updated_at": "2026-04-11T01:05:00+08:00",
+  "default": {
+    "confidence": 0.72,
+    "needs_review": true,
+    "required_sections": [
+      "brief",
+      "findings",
+      "next_step_note"
+    ]
+  },
+  "agents": {
+    "main": {
+      "required_sections": [
+        "brief",
+        "synthesis_note",
+        "routing_decision",
+        "next_step_note"
+      ]
+    },
+    "research": {
+      "required_sections": [
+        "brief",
+        "findings",
+        "evidence",
+        "next_step_note"
+      ]
+    },
+    "ops": {
+      "required_sections": [
+        "brief",
+        "rollout_plan",
+        "risk_check",
+        "next_step_note"
+      ]
+    },
+    "law": {
+      "required_sections": [
+        "brief",
+        "compliance_check",
+        "risk_boundaries",
+        "next_step_note"
+      ]
+    },
+    "finance": {
+      "required_sections": [
+        "brief",
+        "cost_assessment",
+        "roi_note",
+        "next_step_note"
+      ]
+    },
+    "content": {
+      "required_sections": [
+        "brief",
+        "messaging_notes",
+        "content_direction",
+        "next_step_note"
+      ]
+    },
+    "dev": {
+      "required_sections": [
+        "brief",
+        "technical_assessment",
+        "implementation_note",
+        "next_step_note"
+      ]
+    }
+  },
+  "action_overrides": {
+    "review_candidate": {
+      "required_sections_append": [
+        "review_note"
+      ]
+    },
+    "verify_adopted_candidate": {
+      "required_sections_append": [
+        "adoption_check"
+      ]
+    },
+    "verify_procedure_rollout": {
+      "required_sections_append": [
+        "rollout_checklist"
+      ]
+    },
+    "inspect_page_update": {
+      "required_sections_append": [
+        "page_gap_note"
+      ]
+    },
+    "collect_more_evidence": {
+      "required_sections_append": [
+        "evidence_gap_note"
+      ]
+    }
+  }
+}

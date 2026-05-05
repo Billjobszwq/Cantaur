@@ -1,0 +1,159 @@
+{
+  "version": "agent-knowledge-subscriptions/v1",
+  "updated_at": "2026-04-10T17:20:00+08:00",
+  "default_subscribers": {
+    "KNOWLEDGE_PAGE_UPDATED": [
+      "main",
+      "research"
+    ],
+    "KNOWLEDGE_CANDIDATE_CREATED": [
+      "main",
+      "research"
+    ],
+    "MEMORY_CANDIDATE_PROMOTED": [
+      "main",
+      "research"
+    ],
+    "PROCEDURE_PROMOTED": [
+      "main",
+      "ops",
+      "research"
+    ],
+    "REVIEW_DECISION_RECORDED": [
+      "main"
+    ]
+  },
+  "candidate_type_routes": {
+    "project_update": [
+      "ops"
+    ],
+    "decision": [
+      "ops"
+    ],
+    "lesson": [
+      "research"
+    ],
+    "preference": [
+      "content"
+    ],
+    "rule": [
+      "ops",
+      "law"
+    ],
+    "fact": [
+      "research",
+      "finance"
+    ]
+  },
+  "action_routes": {
+    "review_candidate": [
+      "main"
+    ],
+    "review_decision_candidate": [
+      "main",
+      "ops"
+    ],
+    "review_rule_candidate": [
+      "main",
+      "law",
+      "ops"
+    ],
+    "verify_fact_candidate": [
+      "main",
+      "finance",
+      "research"
+    ],
+    "refine_lesson_candidate": [
+      "main",
+      "research",
+      "dev"
+    ],
+    "align_preference_candidate": [
+      "main",
+      "content"
+    ],
+    "inspect_page_update": [
+      "research"
+    ],
+    "verify_memory_promotion": [
+      "main"
+    ],
+    "verify_procedure_rollout": [
+      "ops"
+    ],
+    "collect_more_evidence": [
+      "research"
+    ],
+    "archive_rejected_candidate": [
+      "main"
+    ],
+    "verify_adopted_candidate": [
+      "ops",
+      "main"
+    ]
+  },
+  "keyword_routes": {
+    "dev": [
+      "开发",
+      "代码",
+      "脚本",
+      "数据库",
+      "接口",
+      "架构",
+      "系统设计",
+      "deployment",
+      "deploy"
+    ],
+    "content": [
+      "内容",
+      "文案",
+      "传播",
+      "品牌",
+      "选题",
+      "社媒",
+      "公众号",
+      "热点"
+    ],
+    "ops": [
+      "运营",
+      "执行",
+      "排期",
+      "流程",
+      "落地",
+      "交付",
+      "上线",
+      "发布",
+      "试点",
+      "协同"
+    ],
+    "law": [
+      "法务",
+      "合规",
+      "风险",
+      "条款",
+      "隐私",
+      "监管",
+      "边界"
+    ],
+    "finance": [
+      "财务",
+      "预算",
+      "成本",
+      "ROI",
+      "现金流",
+      "回报",
+      "投入"
+    ],
+    "research": [
+      "研究",
+      "调研",
+      "情报",
+      "证据",
+      "趋势",
+      "分析",
+      "洞察",
+      "报告",
+      "研报"
+    ]
+  }
+}

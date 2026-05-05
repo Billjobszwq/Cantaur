@@ -1,0 +1,101 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+OPENCLAW_HOME="${OPENCLAW_HOME:-$HOME/.openclaw}"
+WORKSPACE="${OPENCLAW_HOME}/workspace"
+DASHBOARD_PID="${OPENCLAW_HOME}/state/dashboard.pid"
+DASHBOARD_HOST="${QYCLAW_DASHBOARD_HOST:-127.0.0.1}"
+DASHBOARD_PORT="${QYCLAW_DASHBOARD_PORT:-8899}"
+
+mkdir -p "${OPENCLAW_HOME}/state" "${OPENCLAW_HOME}/logs"
+
+cmd="${1:-help}"
+shift || true
+
+start_dashboard() {
+  if [[ -f "${DASHBOARD_PID}" ]] && kill -0 "$(cat "${DASHBOARD_PID}")" 2>/dev/null; then
+    echo "dashboard already running"
+    return 0
+  fi
+  nohup python3 "${WORKSPACE}/dashboard/server.py" >"${OPENCLAW_HOME}/logs/dashboard.log" 2>&1 &
+  echo $! > "${DASHBOARD_PID}"
+  echo "dashboard started: http://${DASHBOARD_HOST}:${DASHBOARD_PORT}"
+}
+
+stop_dashboard() {
+  if [[ -f "${DASHBOARD_PID}" ]]; then
+    pid="$(cat "${DASHBOARD_PID}")"
+    kill "$pid" 2>/dev/null || true
+    rm -f "${DASHBOARD_PID}"
+    echo "dashboard stopped"
+  else
+    echo "dashboard not running"
+  fi
+}
+
+case "$cmd" in
+  init)
+    mkdir -p "${OPENCLAW_HOME}" "${OPENCLAW_HOME}/logs" "${OPENCLAW_HOME}/state"
+    mkdir -p "${OPENCLAW_HOME}/workspace"
+    echo "initialized: ${OPENCLAW_HOME}"
+    ;;
+  start)
+    if command -v openclaw >/dev/null 2>&1; then
+      openclaw gateway start || true
+    fi
+    start_dashboard
+    ;;
+  stop)
+    stop_dashboard
+    if command -v openclaw >/dev/null 2>&1; then
+      openclaw gateway stop || true
+    fi
+    ;;
+  restart)
+    "$0" stop
+    "$0" start
+    ;;
+  status)
+    if command -v openclaw >/dev/null 2>&1; then
+      openclaw gateway status || true
+    else
+      echo "openclaw command not found"
+    fi
+    if [[ -f "${DASHBOARD_PID}" ]] && kill -0 "$(cat "${DASHBOARD_PID}")" 2>/dev/null; then
+      echo "dashboard: running (pid $(cat "${DASHBOARD_PID}"))"
+    else
+      echo "dashboard: stopped"
+    fi
+    ;;
+  panel)
+    sub="${1:-open}"
+    if [[ "$sub" == "start" ]]; then
+      start_dashboard
+    elif [[ "$sub" == "stop" ]]; then
+      stop_dashboard
+    else
+      echo "http://${DASHBOARD_HOST}:${DASHBOARD_PORT}"
+    fi
+    ;;
+  doctor)
+    if command -v openclaw >/dev/null 2>&1; then
+      openclaw doctor || true
+    else
+      echo "openclaw command not found"
+    fi
+    python3 "${WORKSPACE}/scripts/formal_fusion_version.py" status || true
+    ;;
+  run)
+    python3 "${WORKSPACE}/scripts/formal_fusion_version.py" run "$@"
+    ;;
+  help|*)
+    cat <<USAGE
+qyclaw commands:
+  qyclaw init
+  qyclaw start|stop|restart|status
+  qyclaw panel [start|stop|open]
+  qyclaw doctor
+  qyclaw run --title "..." --goal "..."
+USAGE
+    ;;
+esac

@@ -1,0 +1,21 @@
+{
+  "protocol": "openclaw-a2a/v1",
+  "message_type": "REVIEW",
+  "message_id": "msg-20260403-003",
+  "task_id": "task-20260403-001",
+  "trace_id": "trace-20260403-001",
+  "parent_task_id": null,
+  "from": "main",
+  "to": "law",
+  "created_at": "2026-04-03T16:25:00+08:00",
+  "body": {
+    "review_target": "task-20260403-001",
+    "review_scope": [
+      "facts",
+      "risk",
+      "compliance"
+    ],
+    "review_note": "请复核数据口径与合规边界",
+    "requested_by": "main"
+  }
+}

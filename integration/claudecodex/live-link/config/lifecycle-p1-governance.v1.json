@@ -1,0 +1,31 @@
+{
+  "version": "lifecycle-p1-governance/v1",
+  "updated_at": "2026-05-03T12:30:00+08:00",
+  "runtime": "live",
+  "retry": {
+    "enabled": true,
+    "statuses": [
+      "blocked",
+      "timed_out"
+    ],
+    "require_subtask_statuses": [
+      "timed_out",
+      "failed"
+    ],
+    "min_created_age_hours": 0,
+    "max_created_age_hours": 24,
+    "max_roots_per_run": 8,
+    "reason": "P1 governance retry for recent blocked/timed_out root"
+  },
+  "archive": {
+    "enabled": true,
+    "statuses": [
+      "queued",
+      "blocked",
+      "timed_out"
+    ],
+    "min_created_age_hours": 168,
+    "max_roots_per_run": 30,
+    "reason": "P1 governance archive stale root task tree"
+  }
+}

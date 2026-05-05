@@ -1,0 +1,24 @@
+{
+  "task_id": "task-20260403-report-001",
+  "trace_id": "trace-20260403-report-001",
+  "title": "示例行业系统综合报告",
+  "goal": "围绕示例行业系统形成一份跨部门综合报告底稿，由 main 统一收口。",
+  "task_type": "report.cross_functional",
+  "requested_by": "user",
+  "priority": "high",
+  "deadline": "2026-04-03T22:00:00+08:00",
+  "required_agents": [],
+  "required_domains": ["research", "operations", "legal", "finance"],
+  "constraints": [
+    "必须带来源",
+    "先产出底稿，不直接对外发布",
+    "law 和 finance 只做 review/recommendation，不替代 main 收口"
+  ],
+  "required_output": [
+    "research findings",
+    "ops execution note",
+    "law guardrail review",
+    "finance roi note",
+    "main synthesis"
+  ]
+}

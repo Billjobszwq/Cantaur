@@ -1,0 +1,32 @@
+# Runtime
+logs/
+state/
+cron/
+delivery-queue/
+tasks/
+tmp/
+
+# Local env
+.env
+.env.*
+openclaw.json
+*.pid
+
+# Build/cache
+__pycache__/
+*.pyc
+node_modules/
+venv/
+
+# DB and runtime artifacts
+*.db
+*.db-*
+*.sqlite
+integration/**/runtime/
+integration/**/bus/runtime/
+integration/**/live-link/runtime/
+
+# OS/editor
+.DS_Store
+.vscode/
+.idea/

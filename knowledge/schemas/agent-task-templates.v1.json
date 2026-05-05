@@ -1,0 +1,132 @@
+{
+  "version": "agent-task-templates/v1",
+  "updated_at": "2026-04-11T00:58:00+08:00",
+  "default": {
+    "required_output": [
+      "brief",
+      "findings",
+      "next_step_note"
+    ],
+    "constraints": [
+      "仅围绕当前知识生命周期消息行动，不扩展任务边界。",
+      "结果需可回交给 main 汇总。"
+    ],
+    "handoff_to": "main"
+  },
+  "agents": {
+    "main": {
+      "required_output": [
+        "brief",
+        "synthesis_note",
+        "routing_decision",
+        "next_step_note"
+      ],
+      "constraints": [
+        "优先做主控判断与分发，不重复专业 agent 已覆盖的分析。"
+      ]
+    },
+    "research": {
+      "required_output": [
+        "brief",
+        "findings",
+        "evidence",
+        "next_step_note"
+      ],
+      "constraints": [
+        "优先补证据、补样本、补对比，不直接写执行结论。"
+      ]
+    },
+    "ops": {
+      "required_output": [
+        "brief",
+        "rollout_plan",
+        "risk_check",
+        "next_step_note"
+      ],
+      "constraints": [
+        "优先关注执行路径、上线步骤、协同成本和回退条件。"
+      ]
+    },
+    "law": {
+      "required_output": [
+        "brief",
+        "compliance_check",
+        "risk_boundaries",
+        "next_step_note"
+      ],
+      "constraints": [
+        "优先给出合规边界、禁区和例外条件，不扩展商业判断。"
+      ]
+    },
+    "finance": {
+      "required_output": [
+        "brief",
+        "cost_assessment",
+        "roi_note",
+        "next_step_note"
+      ],
+      "constraints": [
+        "优先给出成本、投入产出和预算影响，不扩展法务结论。"
+      ]
+    },
+    "content": {
+      "required_output": [
+        "brief",
+        "messaging_notes",
+        "content_direction",
+        "next_step_note"
+      ],
+      "constraints": [
+        "优先沉淀表达策略、内容方向和传播口径。"
+      ]
+    },
+    "dev": {
+      "required_output": [
+        "brief",
+        "technical_assessment",
+        "implementation_note",
+        "next_step_note"
+      ],
+      "constraints": [
+        "优先给出技术实现、系统改造和接口影响判断。"
+      ]
+    }
+  },
+  "action_overrides": {
+    "verify_procedure_rollout": {
+      "required_output_append": [
+        "rollout_checklist"
+      ]
+    },
+    "verify_memory_promotion": {
+      "required_output_append": [
+        "memory_sync_note"
+      ]
+    },
+    "review_candidate": {
+      "required_output_append": [
+        "review_note"
+      ]
+    },
+    "inspect_page_update": {
+      "required_output_append": [
+        "page_gap_note"
+      ]
+    },
+    "collect_more_evidence": {
+      "required_output_append": [
+        "evidence_gap_note"
+      ]
+    },
+    "verify_adopted_candidate": {
+      "required_output_append": [
+        "adoption_check"
+      ]
+    },
+    "archive_rejected_candidate": {
+      "required_output_append": [
+        "archive_note"
+      ]
+    }
+  }
+}

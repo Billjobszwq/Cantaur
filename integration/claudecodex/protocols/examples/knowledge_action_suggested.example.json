@@ -1,0 +1,24 @@
+{
+  "protocol": "openclaw-a2a/v1",
+  "message_type": "KNOWLEDGE_ACTION_SUGGESTED",
+  "message_id": "task-001-knowledge-action-001-to-ops",
+  "task_id": "task-001",
+  "trace_id": "trace-001",
+  "parent_task_id": null,
+  "from": "main",
+  "to": "ops",
+  "created_at": "2026-04-10T17:20:00+08:00",
+  "body": {
+    "action_type": "verify_procedure_rollout",
+    "title": "检查新 procedure 是否应进入默认运行面",
+    "reason": "新 procedure 已产生，建议由 ops 评估 rollout_scope 和落地方式。",
+    "priority": "high",
+    "target_agent": "ops",
+    "ref": "/abs/path/memory/30-procedures/xxx.md",
+    "recommended_command": "",
+    "source_message_ids": [
+      "task-001-procedure-promoted-001"
+    ],
+    "suggested_by": "main"
+  }
+}

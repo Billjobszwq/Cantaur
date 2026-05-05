@@ -1,0 +1,68 @@
+{
+  "version": "hermes-fusion-autopilot/v1",
+  "updated_at": "2026-05-03T00:00:00+08:00",
+  "knowledge": {
+    "enabled": true,
+    "decision": "observe",
+    "max_items_per_run": 8,
+    "allowed_candidate_types": [
+      "decision",
+      "rule",
+      "fact",
+      "lesson",
+      "preference"
+    ],
+    "blocked_keywords": [
+      "删除",
+      "drop",
+      "destructive",
+      "高风险",
+      "合规争议"
+    ],
+    "reviewer": "main",
+    "note": "auto triage by hermes fusion orchestrator"
+  },
+  "memory": {
+    "enabled": true,
+    "status": "approved",
+    "max_items_per_agent": 5,
+    "max_items_total": 20,
+    "days": 14,
+    "limit": 200,
+    "min_confidence": 0.78,
+    "min_priority": 3,
+    "allowed_candidate_types": [
+      "decision",
+      "lesson",
+      "preference",
+      "procedure",
+      "rule",
+      "fact"
+    ],
+    "blocked_keywords": [
+      "删除",
+      "drop",
+      "destructive",
+      "高风险",
+      "合规争议"
+    ],
+    "reviewer": "main",
+    "note": "auto triage by hermes fusion orchestrator"
+  },
+  "bridge": {
+    "enabled": true,
+    "status_limit": 20,
+    "autopilot_blocking_statuses": [
+      "in_progress",
+      "claimed"
+    ],
+    "skip_autopilot_when_conflict": true,
+    "evaluate_with_recent_roots": true,
+    "conflict_window_days": 7,
+    "max_blocked_roots_for_autopilot": 999999,
+    "max_timed_out_roots_for_autopilot": 999999,
+    "max_queued_roots_for_autopilot": 999999,
+    "timeout_minutes": 30,
+    "timeout_limit": 200
+  }
+}

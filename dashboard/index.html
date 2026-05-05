@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小云 · 系统状态面板</title>
+<style>
+  [data-theme="dark"] { --bg:#0a0a0f;--card-bg:#14141f;--border:#1e1e30;--text:#e0e0e8;--text-muted:#7a7a90;--text-strong:#f0f0f8;--accent:#6c5ce7;--accent-glow:rgba(108,92,231,0.3);--green:#00d2a0;--green-glow:rgba(0,210,160,0.25);--orange:#f5a623;--red:#e74c3c;--blue:#54a0ff;--bg-radial-1:rgba(108,92,231,0.06);--bg-radial-2:rgba(0,210,160,0.04);--item-bg:#0a0a0f;--code-bg:rgba(108,92,231,0.1);--alert-warn-bg:rgba(245,166,35,0.08);--alert-info-bg:rgba(84,160,255,0.08);--toggle-bg:#1a1a28;--shadow-stat:0 0 20px var(--accent-glow); }
+  [data-theme="light"] { --bg:#f5f5f8;--card-bg:#ffffff;--border:#e2e2ea;--text:#2a2a3a;--text-muted:#6a6a80;--text-strong:#1a1a2a;--accent:#5b4ae0;--accent-glow:rgba(91,74,224,0.12);--green:#00a87a;--green-glow:rgba(0,168,122,0.15);--orange:#d4891a;--red:#d63031;--blue:#3b7dd8;--bg-radial-1:rgba(91,74,224,0.03);--bg-radial-2:rgba(0,168,122,0.02);--item-bg:#f8f9fd;--code-bg:rgba(91,74,224,0.06);--alert-warn-bg:rgba(212,137,26,0.06);--alert-info-bg:rgba(59,125,216,0.05);--toggle-bg:#e8e8f0;--shadow-stat:0 2px 16px rgba(0,0,0,0.06); }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.5;min-height:100vh;transition:background .4s,color .4s}
+  body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 20% 20%,var(--bg-radial-1) 0%,transparent 60%),radial-gradient(ellipse 60% 80% at 80% 80%,var(--bg-radial-2) 0%,transparent 60%);pointer-events:none;z-index:0}
+  .shell{position:relative;z-index:1;max-width:1440px;margin:0 auto;padding:24px 28px 40px}
+  .header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:16px}
+  .brand{display:flex;align-items:center;gap:12px}
+  .brand .logo{width:42px;height:42px;background:var(--accent);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff;box-shadow:0 0 24px var(--accent-glow)}
+  .brand h1{font-size:22px;font-weight:700;color:var(--text-strong)}
+  .brand .ver{font-size:12px;color:var(--text-muted);font-weight:400}
+  .header-right{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .live-dot{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:20px;background:var(--card-bg);border:1px solid var(--border);font-size:13px;color:var(--green)}
+  .live-dot::before{content:'';width:8px;height:8px;background:var(--green);border-radius:50%;animation:pulse 2s ease-in-out infinite;box-shadow:0 0 10px var(--green-glow)}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+  .time-badge{font-size:13px;color:var(--text-muted);font-family:'SF Mono','Fira Code',monospace}
+  .btn{padding:6px 16px;border-radius:6px;border:none;cursor:pointer;font-size:12px;font-weight:600;color:#fff;transition:opacity .2s}
+  .btn:hover{opacity:.85}.btn:disabled{opacity:.5;cursor:not-allowed}
+  .btn-accent{background:var(--accent)}.btn-red{background:var(--red)}.btn-blue{background:var(--blue)}
+  .stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:24px}
+  .stat-card{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:16px 18px;transition:all .3s}
+  .stat-card:hover{border-color:var(--accent);box-shadow:var(--shadow-stat)}
+  .stat-card .label{font-size:12px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
+  .stat-card .value{font-size:26px;font-weight:700;font-family:'SF Mono','Fira Code',monospace}
+  .stat-card .sub{font-size:12px;color:var(--text-muted);margin-top:4px}
+  .accent{color:var(--accent)}.green{color:var(--green)}.orange{color:var(--orange)}.blue{color:var(--blue)}.red{color:var(--red)}
+  .main-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:24px}
+  @media(max-width:900px){.main-grid{grid-template-columns:1fr}}
+  .card{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:20px;transition:border-color .3s}
+  .card:hover{border-color:var(--accent)}.card h3{font-size:14px;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:8px;color:var(--text-strong)}
+  .agent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
+  .agent-item{background:var(--item-bg);border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center;transition:all .3s}
+  .agent-item:hover{border-color:var(--accent);box-shadow:0 0 14px var(--accent-glow)}
+  .agent-item .name{font-size:13px;font-weight:600;color:var(--text-strong)}.agent-item .role{font-size:10px;color:var(--text-muted);margin-top:2px}
+  .agent-item .status-dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-top:6px}
+  .agent-item .status-dot.active{background:var(--green);box-shadow:0 0 8px var(--green-glow)}.agent-item .status-dot.idle{background:var(--text-muted)}
+  .agent-item .sessions{font-size:10px;color:var(--text-muted);margin-top:4px}
+  .progress-section{margin-bottom:14px}
+  .progress-label{display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px}.progress-label .key{color:var(--text-muted)}.progress-label .val{font-weight:600;font-family:'SF Mono','Fira Code',monospace}
+  .progress-bar{height:6px;background:var(--item-bg);border-radius:3px;overflow:hidden}
+  .progress-fill{height:100%;border-radius:3px;transition:width .6s}.progress-fill.green{background:var(--green)}.progress-fill.accent{background:var(--accent)}.progress-fill.red{background:var(--red)}
+  .cron-list{display:flex;flex-direction:column;gap:10px}
+  .cron-item{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:var(--item-bg);border:1px solid var(--border);border-radius:8px;font-size:12px}
+  .cron-schedule{font-family:'SF Mono','Fira Code',monospace;color:var(--accent);white-space:nowrap;min-width:50px;padding:2px 8px;background:var(--code-bg);border-radius:4px;font-weight:600}
+  .cron-desc{color:var(--text-muted);flex:1}.cron-status{font-size:10px;padding:2px 8px;border-radius:4px;font-weight:600;white-space:nowrap}
+  .cron-status.active{background:rgba(0,210,160,.12);color:var(--green)}.cron-status.idle{background:rgba(84,160,255,.12);color:var(--blue)}
+  .token-bar{display:flex;align-items:stretch;height:28px;border-radius:6px;overflow:hidden;margin-bottom:16px}
+  .token-bar .used{background:linear-gradient(90deg,var(--accent),#a29bfe);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff}
+  .token-bar .free{background:var(--item-bg);display:flex;align-items:center;padding-left:10px;font-size:10px;color:var(--text-muted)}
+  .alert-list{display:flex;flex-direction:column;gap:8px}
+  .alert{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;font-size:12px;border:1px solid}
+  .alert.warn{background:var(--alert-warn-bg);border-color:rgba(245,166,35,.3);color:var(--orange)}.alert.info{background:var(--alert-info-bg);border-color:rgba(84,160,255,.3);color:var(--blue)}.alert.error{background:rgba(231,76,60,.08);border-color:rgba(231,76,60,.3);color:var(--red)}
+  .footer{text-align:center;padding:20px 0;color:var(--text-muted);font-size:11px;border-top:1px solid var(--border);margin-top:8px}
+  .full-width{grid-column:1/-1}
+  .model-pool{margin-top:16px;padding:12px;background:var(--item-bg);border-radius:8px;border:1px solid var(--border)}
+  .tag-cloud{display:flex;flex-wrap:wrap;gap:6px}
+  .tag{display:inline-block;padding:4px 10px;background:var(--item-bg);border:1px solid var(--border);border-radius:6px;font-size:11px;color:var(--text-muted)}
+  .update-flash{animation:flash .5s ease-out}@keyframes flash{0%{background:rgba(0,210,160,.1)}100%{background:transparent}}
+  .loading{text-align:center;padding:40px;color:var(--text-muted)}
+  .toast{position:fixed;top:20px;right:20px;padding:12px 24px;border-radius:8px;font-size:13px;z-index:999;animation:slideIn .3s ease-out;font-weight:600}
+  @keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="header">
+    <div class="brand"><div class="logo">☁️</div><div><h1>小云 · 系统状态面板 <span class="ver" id="ver"></span></h1></div></div>
+    <div class="header-right">
+      <span class="live-dot" id="live-dot">加载中...</span>
+      <span class="time-badge" id="clock">--</span>
+      <button class="btn btn-accent" onclick="refreshData()">🔄 刷新</button>
+      <button class="btn btn-red" onclick="restartGateway()">⚡ 重启 Gateway</button>
+      <button class="btn btn-blue" onclick="showDoctor()">🩺 Doctor</button>
+    </div>
+  </div>
+  <div class="stats-row" id="stats-row"><div class="loading">⏳ 加载中...</div></div>
+  <div class="main-grid">
+    <div class="card"><h3>🤖 Agent 活跃度</h3><div class="agent-grid" id="agent-grid"></div></div>
+    <div class="card"><h3>📋 进度</h3><div id="progress-section"></div></div>
+    <div class="card"><h3>⚠️ 告警</h3><div class="alert-list" id="alert-list"></div></div>
+    <div class="card"><h3>⚡ Token</h3><div id="token-section"></div></div>
+    <div class="card full-width"><h3>⏱️ 定时任务</h3><div class="cron-list" id="cron-list"></div></div>
+    <div class="card full-width" id="doctor-card" style="display:none"><h3>🩺 OpenClaw Doctor <span id="doctor-status"></span></h3><div id="doctor-content"></div></div>
+  </div>
+  <div class="footer">小云 ☁️ · 快照: <span id="snap">--</span> · 自动刷新: 30秒</div>
+</div>
+
+<script>
+const API = 'http://localhost:8899';
+let D = {};
+
+function toast(msg, ok) {
+  const t = document.createElement('div');
+  t.className = 'toast';
+  t.style.background = ok ? 'var(--green)' : 'var(--red)';
+  t.style.color = '#fff'; t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 3000);
+}
+
+async function fetchData() {
+  try {
+    const r = await fetch(API + '/data');
+    if (r.ok) { D = await r.json(); populateUI(); }
+  } catch(e) {}
+}
+
+function populateUI() {
+  document.getElementById('ver').textContent = 'OpenClaw ' + (D.version||'?');
+  document.getElementById('snap').textContent = D.timestamp || '--';
+  
+  const dot = document.getElementById('live-dot');
+  if (D.gateway && D.gateway.running) {
+    dot.innerHTML = dot.innerHTML.replace(/加载|已停止|运行中/g, '运行中');
+    dot.style.color = 'var(--green)';
+  } else {
+    dot.innerHTML = dot.innerHTML.replace(/加载|已停止|运行中/g, '已停止');
+    dot.style.color = 'var(--red)';
+  }
+
+  const agents = D.agents || [];
+  document.getElementById('stats-row').innerHTML = [
+    {l:'活跃Agent',v:D.active_sessions||0,c:'accent',s:agents.filter(a=>a.active).map(a=>a.name).join(' · ')},
+    {l:'可用Agent',v:agents.length,c:'blue',s:agents.map(a=>a.name).join(' · ')},
+    {l:'可用技能',v:(D.skills||{}).total||0,c:'green',s:(D.skills?.custom||0)+' 自定义 + '+(D.skills?.builtin||0)+' 内置'},
+    {l:'定时任务',v:(D.cron_jobs||[]).length+(D.launchd_jobs||[]).length,c:'orange',s:(D.cron_jobs||[]).length+' Cron + '+(D.launchd_jobs||[]).length+' LaunchAgent'},
+    {l:'Token',v:Math.round((D.tokens?.estimated||0)/1000)+'K',c:'accent',s:Math.round((D.tokens?.context||0)/1000)+'K 窗口'},
+    {l:'记忆',v:D.memory?.daily_files||0,c:'green',s:(D.memory?.knowledge_pages||0)+' 知识页 · 今日 '+(D.memory?.today_kb||0)+'KB'},
+  ].map(s=>`<div class="stat-card"><div class="label">${s.l}</div><div class="value ${s.c}">${s.v}</div><div class="sub">${s.s}</div></div>`).join('');
+
+  document.getElementById('agent-grid').innerHTML = agents.map(a=>
+    `<div class="agent-item"><div class="name">${a.name}</div><div class="role">${a.role}</div><div class="status-dot ${a.active?'active':'idle'}"></div><div class="sessions">${a.active?a.sessions+' 会话':'待命中'}</div></div>`
+  ).join('');
+
+  const gwOk = D.gateway?.running, memOk = (D.memory?.daily_files||0)>0;
+  document.getElementById('progress-section').innerHTML = [
+    {k:'🫀 Gateway',v:gwOk?'运行中':'停止',c:gwOk?'green':'red',p:gwOk?100:0},
+    {k:'🧠 记忆维护',v:memOk?'正常':'异常',c:memOk?'green':'red',p:memOk?100:30},
+    {k:'📰 AI追踪',v:'5次/天',c:'green',p:100},
+    {k:'🤖 lark-cli',v:'Bitable全权限',c:'green',p:100},
+    {k:'📚 知识库',v:(D.memory?.knowledge_pages||0)+'页',c:'accent',p:70},
+  ].map(p=>`<div class="progress-section"><div class="progress-label"><span class="key">${p.k}</span><span class="val" style="color:var(--${p.c})">${p.v}</span></div><div class="progress-bar"><div class="progress-fill ${p.c}" style="width:${p.p}%"></div></div></div>`).join('');
+
+  document.getElementById('alert-list').innerHTML = (D.alerts||[]).map(a=>
+    `<div class="alert ${a.level}"><span>${{warn:'⚠️',error:'🔴',info:'ℹ️'}[a.level]||'•'}</span><div>${a.msg}</div></div>`
+  ).join('');
+
+  const pct = ((D.tokens?.estimated||0)/(D.tokens?.context||1)*100).toFixed(1);
+  document.getElementById('token-section').innerHTML = `
+    <div style="margin-bottom:12px"><div class="progress-label"><span class="key">上下文使用率</span><span class="val">${Math.round((D.tokens?.estimated||0)/1000)}K / ${Math.round((D.tokens?.context||0)/1000)}K (${pct}%)</span></div>
+    <div class="token-bar"><div class="used" style="width:${pct}%">${pct}%</div><div class="free">可用: ${Math.round(((D.tokens?.context||0)-(D.tokens?.estimated||0))/1000)}K</div></div></div>
+    <div class="progress-section"><div class="progress-label"><span class="key">模型</span><span class="val accent">${D.tokens?.model||'?'}</span></div></div>
+    <div class="model-pool"><div style="font-size:11px;color:var(--text-muted);margin-bottom:6px">模型池</div>
+      <div class="tag-cloud"><span class="tag accent">deepseek-v4-pro ★</span><span class="tag">deepseek-v4-flash</span><span class="tag">deepseek-reasoner</span><span class="tag">deepseek-chat</span><span class="tag">kimi-k2.5</span></div></div>`;
+
+  const all = [...(D.cron_jobs||[]).map(j=>({...j,type:'Cron'})),...(D.launchd_jobs||[]).map(j=>({name:j.name,schedule:'LaunchAgent',status:j.status,type:'LaunchAgent'}))];
+  document.getElementById('cron-list').innerHTML = all.map(j=>
+    `<div class="cron-item"><span class="cron-schedule">${j.schedule||j.type}</span><div class="cron-desc"><strong>${j.name}</strong><br>${j.type} · ${j.next||''}</div><span class="cron-status ${j.status==='active'||j.status==='running'?'active':'idle'}">${j.status}</span></div>`
+  ).join('') || '<div style="color:var(--text-muted);font-size:12px">暂无</div>';
+}
+
+// Manual refresh
+window.refreshData = async () => { await fetchData(); toast('已刷新', true); };
+
+// Restart gateway
+window.restartGateway = function() {
+  if (!confirm('确认重启 OpenClaw Gateway？')) return;
+  const btn = document.querySelector('.btn-red');
+  btn.textContent = '⏳ 重启中...'; btn.disabled = true;
+  fetch(API + '/restart').then(r=>r.json()).then(d=>{
+    toast(d.success?'✅ Gateway 重启成功':'❌ '+d.message, d.success);
+    setTimeout(()=>location.reload(), 4000);
+  }).catch(e=>toast('请求失败: '+e,false))
+  .finally(()=>{btn.textContent='⚡ 重启 Gateway';btn.disabled=false;});
+};
+
+// Doctor
+window.showDoctor = async function() {
+  const card = document.getElementById('doctor-card');
+  const content = document.getElementById('doctor-content');
+  if (card.style.display === 'block') { card.style.display = 'none'; return; }
+  card.style.display = 'block';
+  content.innerHTML = '<div style="padding:20px;color:var(--text-muted)">⏳ 运行中...</div>';
+  card.scrollIntoView({behavior:'smooth'});
+  try {
+    const r = await fetch(API + '/doctor');
+    const doc = await r.json();
+    document.getElementById('doctor-status').textContent = `✅${doc.pass_count} ❌${doc.fail_count}`;
+    content.innerHTML = `<pre style="max-height:400px;overflow:auto;font-family:'SF Mono','Fira Code',monospace;font-size:11px;line-height:1.8;white-space:pre-wrap;background:var(--item-bg);padding:12px;border-radius:8px;color:var(--text-muted)">${doc.raw||'无输出'}</pre>`;
+  } catch(e) {
+    content.innerHTML = '<div style="color:var(--red)">❌ '+e.message+'</div>';
+  }
+};
+
+// Clock
+setInterval(()=>{document.getElementById('clock').textContent=new Date().toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false})},1000);
+document.getElementById('clock').textContent=new Date().toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false});
+
+// Init
+fetchData();
+setInterval(fetchData, 30000);
+</script>
+</body>
+</html>

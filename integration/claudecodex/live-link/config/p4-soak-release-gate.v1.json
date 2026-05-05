@@ -1,0 +1,19 @@
+{
+  "version": "p4-soak-release-gate/v1",
+  "updated_at": "2026-05-04T00:43:22+08:00",
+  "runtime": "live",
+  "window_days": 7,
+  "thresholds": {
+    "max_health_failures": 0,
+    "max_p3_failures": 0,
+    "max_executor_failure_rate": 0.03,
+    "min_executor_runs": 500,
+    "max_alert_lines": 3
+  },
+  "release_controls": {
+    "auto_defer_rollout_on_fail": true,
+    "defer_target_tier": "low",
+    "apply_rollout_tier_update": false,
+    "clear_hold_flag_on_pass": true
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "version": "coordinator-routing-policy/v1",
+  "default_coordinator": "main",
+  "task_type_routes": {
+    "report.": ["research", "ops", "law", "finance", "content"],
+    "research.": ["research"],
+    "engineering.": ["dev"],
+    "system.": ["dev", "research"],
+    "ops.": ["ops", "law", "finance"],
+    "content.": ["content"],
+    "compliance.": ["law"],
+    "finance.": ["finance"]
+  },
+  "domain_routes": {
+    "research": "research",
+    "evidence": "research",
+    "engineering": "dev",
+    "architecture": "dev",
+    "content": "content",
+    "messaging": "content",
+    "operations": "ops",
+    "execution": "ops",
+    "legal": "law",
+    "compliance": "law",
+    "finance": "finance",
+    "roi": "finance"
+  },
+  "review_defaults": {
+    "research": ["main"],
+    "dev": ["main"],
+    "content": ["main"],
+    "ops": ["main"],
+    "law": ["main"],
+    "finance": ["main"]
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "version": "lifecycle-health-gate/v1",
+  "updated_at": "2026-05-03T12:30:00+08:00",
+  "runtime": "live",
+  "thresholds": {
+    "max_root_blocked": 6,
+    "max_subtask_active": 120,
+    "max_subtask_timed_out": 60,
+    "max_oldest_active_subtask_minutes": 180,
+    "max_recent_timeout_events_6h": 40
+  },
+  "exit_nonzero_on_warn": false
+}

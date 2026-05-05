@@ -1,0 +1,28 @@
+{
+  "protocol": "openclaw-a2a/v1",
+  "message_type": "TASK",
+  "message_id": "msg-20260403-001",
+  "task_id": "task-20260403-001",
+  "trace_id": "trace-20260403-001",
+  "parent_task_id": null,
+  "from": "main",
+  "to": "research",
+  "created_at": "2026-04-03T15:00:00+08:00",
+  "body": {
+    "goal": "完成示例行业系统研究底稿",
+    "constraints": [
+      "仅限中国市场",
+      "必须附来源",
+      "输出中文 markdown"
+    ],
+    "inputs": [],
+    "required_output": [
+      "brief",
+      "findings",
+      "review_note"
+    ],
+    "priority": "high",
+    "deadline": "2026-04-03T18:00:00+08:00",
+    "handoff_to": "main"
+  }
+}
